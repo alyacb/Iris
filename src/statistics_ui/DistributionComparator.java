@@ -30,7 +30,10 @@ public class DistributionComparator extends Panel {
     private void initialize(){
         this.setLayout(new GridLayout(1, 2));
         
-        this.add(new DataSetEditor(source) {
+        cdg = new ContinuousDistributionGrapher(cd);
+        this.add(cdg);
+        
+        DataSetEditor dse = new DataSetEditor(source) {
             @Override
             public void onRefresh(){
                 super.onRefresh();
@@ -38,10 +41,8 @@ public class DistributionComparator extends Panel {
                 cd.setStandardDeviation(source.getStandardDeviation());
                 cdg.refresh();
             }
-        });
-        
-        cdg = new ContinuousDistributionGrapher(cd);
-        this.add(cdg);
+        };
+        this.add(dse);
     }
     
     public static void main(String[] args){

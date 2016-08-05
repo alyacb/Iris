@@ -182,7 +182,7 @@ public class DataSet {
         return mode;
     }
 
-    public int getDumberOfDataPoints() {
+    public int getNumberOfDataPoints() {
         return dataNumber;
     }
 

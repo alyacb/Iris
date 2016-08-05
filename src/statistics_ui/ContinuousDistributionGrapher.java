@@ -15,12 +15,16 @@ import statistics.ContinuousDistribution;
  * @author alyacarina
  */
 public class ContinuousDistributionGrapher extends Panel {
-    private ContinuousDistribution distribution;
+    private final ContinuousDistribution distribution;
     private Canvas face;
     private Label details;
-    
+    private final int x_base, y_base, padding;
     
     public ContinuousDistributionGrapher(ContinuousDistribution distribution) {
+        x_base = 30;
+        y_base = 30;
+        padding = 15;
+        
         this.distribution = distribution;
         initialize();
     }
@@ -36,10 +40,10 @@ public class ContinuousDistributionGrapher extends Panel {
                 double mean_temp = distribution.getMean();
                 distribution.setMean(0);
                 
-                int x_shift = 1200;
-                int y_max = 600;
-                double wf = x_shift/(distribution.getUpperLimit()-distribution.getLowerLimit());
-                double hf = y_max;
+                int width = this.getWidth() - x_base;
+                int height = this.getHeight() - y_base;
+                double wf = width/(distribution.getUpperLimit()-distribution.getLowerLimit());
+                double hf = height;
                 
                 g2d.setColor(Color.black);
                 double previous = distribution.f(distribution.getLowerLimit());
@@ -49,18 +53,18 @@ public class ContinuousDistributionGrapher extends Panel {
                     double next = distribution.f(x);
                     double prex = x - distribution.getDx();
                     
-                    g2d.drawLine(x_shift/2 + (int)(wf*prex), 
-                            y_max - (int)(hf*previous),
-                            x_shift/2 + (int)(wf*x), 
-                            y_max - (int)(hf*next));
+                    g2d.drawLine(width/2 + (int)(wf*prex), 
+                            height - (int)(hf*previous),
+                            width/2 + (int)(wf*x), 
+                            height - (int)(hf*next));
                     previous = next;
                 }
                 
                 g2d.setColor(Color.red);
-                int meanx = x_shift/2 - (int)(wf*mean_temp);
-                g2d.drawString(mean_temp+"", x_shift/2-5, y_max+15);
-                g2d.drawLine(meanx, y_max, meanx, 0);
-                g2d.drawLine(0, y_max, x_shift*2, y_max);
+                int meanx = width/2 - (int)(wf*mean_temp);
+                g2d.drawString(mean_temp+"", width/2-padding, height+padding);
+                g2d.drawLine(meanx, height, meanx, y_base);
+                g2d.drawLine(x_base, height, width, height);
                 
                 distribution.setMean(mean_temp);
             }

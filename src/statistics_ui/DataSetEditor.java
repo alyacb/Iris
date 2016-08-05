@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import statistics.DataSet;
@@ -23,15 +26,16 @@ public class DataSetEditor extends Panel {
         step_size = 1;
         initialize();
     }
-    
+
     // Allows containers/ subclasses to add extra refresh functionality
-    public void onRefresh(){}
+    public void onRefresh() {
+    }
 
     private void initialize() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         DataSetGrapher graphs = new DataSetGrapher(ds) {
             @Override
-            public void refresh(double step_size){
+            public void refresh(double step_size) {
                 super.refresh(step_size);
                 onRefresh();
             }
@@ -45,21 +49,68 @@ public class DataSetEditor extends Panel {
                 String next = commandBox.getText();
                 commandBox.setText("");
                 next = next.trim();
-                if(next.substring(1).isEmpty()){
+                if (next.substring(1).isEmpty()) {
                     return;
                 }
 
-                double d = Double.parseDouble(next.substring(1));
+                int i = next.indexOf("file");
+                if (i != -1) {
+                    String file_name = "/Users/alyacarina/NetBeansProjects/Iris/src/statistics_ui/nums.txt";
+
+                    try (BufferedReader in = new BufferedReader(new FileReader(file_name))) {
+                        String nextLine;
+                        while ((nextLine = in.readLine()) != null) {
+                            while (nextLine.length() > 0) {
+                                try {
+                                    String sub = "";
+                                    int j = 0;
+                                    for (; j < nextLine.length(); j++) {
+                                        if ("-0123456789".contains(nextLine.charAt(j) + "")) {
+                                            int x = nextLine.indexOf(" ");
+                                            if (x != -1) {
+                                                sub = nextLine.substring(j, x);
+                                            } else {
+                                                sub = nextLine.substring(j);
+                                            }
+                                            
+                                            break;
+                                        }
+                                    }
+
+                                    double d = Double.parseDouble(sub);
+                                    ds.addDatum(d);
+                                    nextLine = nextLine.substring(j + sub.length()).trim();
+
+                                } catch (Exception eee) {
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (IOException ioe) {
+                        System.out.println(ioe.getMessage());
+                    }
+
+                    graphs.refresh(step_size);
+                    return;
+                }
+
+                double d;
+                try {
+                    d = Double.parseDouble(next.substring(1));
+                } catch (Exception ep) {
+                    return;
+                }
+
                 if (next.contains("a")) {
                     ds.addDatum(d);
                 } else if (next.contains("r")) {
                     ds.removeDatum(d);
-                } else if (next.contains("s")){
+                } else if (next.contains("s")) {
                     step_size = d;
                 } else {
                     return;
                 }
-                
+
                 graphs.refresh(step_size);
             }
         });
@@ -67,6 +118,8 @@ public class DataSetEditor extends Panel {
     }
 
     public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir"));
+
         JFrame lookAtMe = new JFrame("DataSet Editor");
         lookAtMe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         lookAtMe.setLayout(new BorderLayout());
