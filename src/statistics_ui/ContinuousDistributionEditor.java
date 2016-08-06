@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import statistics.ContinuousDistribution;
-import statistics.NormalDistribution;
+import statistics.ExponentialDistribution;
 import ui_general_utils.EnterKeyListener;
 
 /**
@@ -80,7 +80,7 @@ public class ContinuousDistributionEditor extends Panel {
         JFrame lookAtMe = new JFrame("CDistribution Editor");
         lookAtMe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         lookAtMe.setLayout(new BorderLayout());
-        lookAtMe.add("Center", new ContinuousDistributionEditor(new NormalDistribution(0, 1)));
+        lookAtMe.add("Center", new ContinuousDistributionEditor(new ExponentialDistribution(1)));
         lookAtMe.setExtendedState(JFrame.MAXIMIZED_BOTH);
         lookAtMe.setVisible(true);
     }

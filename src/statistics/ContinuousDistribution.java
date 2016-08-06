@@ -45,6 +45,7 @@ public abstract class ContinuousDistribution {
 
     public abstract void setStandardDeviation(double x);
     public abstract double getStandardDeviation();
+    public abstract double getCenter();
     
     // probability
     public abstract double f(double x);

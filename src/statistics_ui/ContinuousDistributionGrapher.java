@@ -38,7 +38,7 @@ public class ContinuousDistributionGrapher extends Panel {
                 Graphics2D g2d = (Graphics2D)g;
                 
                 double mean_temp = distribution.getMean();
-                distribution.setMean(0);
+                distribution.setMean(distribution.getCenter());
                 
                 int width = this.getWidth() - x_base;
                 int height = this.getHeight() - y_base;

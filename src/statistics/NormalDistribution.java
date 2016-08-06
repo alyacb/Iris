@@ -47,5 +47,10 @@ public class NormalDistribution extends ContinuousDistribution {
         double exp = (x-mean);
         return Math.pow(Math.E, -exp*exp/(2*variance))/Math.sqrt(2*variance*Math.PI);
     }
+
+    @Override
+    public double getCenter() {
+        return 0;
+    }
     
 }
