@@ -18,7 +18,7 @@ public class ExponentialDistribution extends ContinuousDistribution {
         this.lower_lim = mean - 5*mean;
         this.upper_lim = mean + 5*mean;
     }
-    
+     
     @Override 
     public String getName(){
         return "Normal Distribution";
@@ -47,7 +47,7 @@ public class ExponentialDistribution extends ContinuousDistribution {
     
     @Override
     public double getCenter(){
-        return 1;
+        return mean;
     }
     
 }
