@@ -6,6 +6,7 @@ package statistics;
  * @author alyacarina
  */
 public class ExponentialDistribution extends ContinuousDistribution {
+    
     public ExponentialDistribution(){
         mean = 1;
     }
