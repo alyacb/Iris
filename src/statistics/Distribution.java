@@ -13,9 +13,10 @@ public abstract class Distribution {
     protected double dx = 0.001;
     protected double lower_lim = 0;
     protected double upper_lim = 1;
+    protected String name = "Distribution";
     
     public String getName(){
-        return "";
+        return name;
     }
     
     public void setLowerLimit(double l){
@@ -48,7 +49,6 @@ public abstract class Distribution {
 
     public abstract void setStandardDeviation(double x);
     public abstract double getStandardDeviation();
-    public abstract double getCenter();
     
     // probability
     public abstract double f(double x);

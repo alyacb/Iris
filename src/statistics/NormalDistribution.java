@@ -12,17 +12,13 @@ public class NormalDistribution extends ContinuousDistribution {
         super();
         this.mean = mean;
         this.variance = variance;
+        this.name = "Normal Distribution";
         setLimits();
     }
     
     private void setLimits(){
         this.lower_lim = mean - 5*Math.sqrt(variance);
         this.upper_lim = mean + 5*Math.sqrt(variance);
-    }
-    
-    @Override 
-    public String getName(){
-        return "Normal Distribution";
     }
     
     @Override 
@@ -46,11 +42,6 @@ public class NormalDistribution extends ContinuousDistribution {
     public double f(double x) {
         double exp = (x-mean);
         return Math.pow(Math.E, -exp*exp/(2*variance))/Math.sqrt(2*variance*Math.PI);
-    }
-
-    @Override
-    public double getCenter() {
-        return 0;
     }
     
 }

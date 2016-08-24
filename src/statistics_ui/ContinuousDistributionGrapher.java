@@ -18,12 +18,11 @@ public class ContinuousDistributionGrapher extends Panel {
     private final ContinuousDistribution distribution;
     private Canvas face;
     private Label details;
-    private final int x_base, y_base, padding;
+    private final int x_base, y_base;
     
     public ContinuousDistributionGrapher(ContinuousDistribution distribution) {
         x_base = 30;
         y_base = 30;
-        padding = 15;
         
         this.distribution = distribution;
         initialize();
@@ -37,10 +36,7 @@ public class ContinuousDistributionGrapher extends Panel {
             public void paint(Graphics g){
                 Graphics2D g2d = (Graphics2D)g;
                 
-                double mean_temp = distribution.getMean();
-                distribution.setMean(distribution.getCenter());
-                
-                int width = this.getWidth() - x_base;
+                int width = this.getWidth() - 2*x_base;
                 int height = this.getHeight() - y_base;
                 double wf = width/(distribution.getUpperLimit()-distribution.getLowerLimit());
                 double hf = height;
@@ -52,21 +48,23 @@ public class ContinuousDistributionGrapher extends Panel {
                         x+=distribution.getDx()){
                     double next = distribution.f(x);
                     double prex = x - distribution.getDx();
-                    
-                    g2d.drawLine(width/2 + (int)(wf*prex), 
+
+                    g2d.drawLine(width/2+(int)(wf*prex), 
                             height - (int)(hf*previous),
-                            width/2 + (int)(wf*x), 
+                            width/2+(int)(wf*x), 
                             height - (int)(hf*next));
                     previous = next;
                 }
                 
                 g2d.setColor(Color.red);
-                int meanx = width/2 - (int)(wf*mean_temp);
-                g2d.drawString(mean_temp+"", width/2-padding, height+padding);
-                g2d.drawLine(meanx, height, meanx, y_base);
-                g2d.drawLine(x_base, height, width, height);
                 
-                distribution.setMean(mean_temp);
+                int y_axis_loc = width/2;
+                
+                g2d.drawLine(y_axis_loc, height, y_axis_loc, y_base);
+                
+                g2d.drawLine(x_base, height, width-x_base, height);
+                
+                //distribution.setMean(mean_temp);
             }
         };
         

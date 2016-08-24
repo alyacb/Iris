@@ -9,6 +9,8 @@ public class ChiSquared extends ContinuousDistribution {
     private static double DENOMINATOR;
     
     public ChiSquared(int degrees_of_freedom) {
+        name  = "Chi Squared";
+        
         if (degrees_of_freedom < 0) {
             throw new IllegalStateException("ChiSquared must have positive DOF");
         }
@@ -46,11 +48,6 @@ public class ChiSquared extends ContinuousDistribution {
     @Override
     public double getStandardDeviation() {
         return Math.sqrt(2 * mean);
-    }
-
-    @Override
-    public double getCenter() {
-        return mean;
     }
 
     @Override

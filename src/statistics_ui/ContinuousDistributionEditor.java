@@ -7,8 +7,8 @@ import java.awt.TextArea;
 import java.awt.event.KeyEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import statistics.ChiSquared;
 import statistics.ContinuousDistribution;
+import statistics.NormalDistribution;
 import ui_general_utils.EnterKeyListener;
 
 /**
@@ -77,11 +77,10 @@ public class ContinuousDistributionEditor extends Panel {
     }
     
     public static void main(String[] args){
-        ChiSquared c = new ChiSquared(1);
         JFrame lookAtMe = new JFrame("CDistribution Editor");
         lookAtMe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         lookAtMe.setLayout(new BorderLayout());
-        lookAtMe.add("Center", new ContinuousDistributionEditor(c));
+        lookAtMe.add("Center", new ContinuousDistributionEditor(new NormalDistribution(0, 1)));
         lookAtMe.setExtendedState(JFrame.MAXIMIZED_BOTH);
         lookAtMe.setVisible(true);
     }
