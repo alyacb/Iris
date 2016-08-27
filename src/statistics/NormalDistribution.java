@@ -14,6 +14,7 @@ public class NormalDistribution extends ContinuousDistribution {
         this.variance = variance;
         this.name = "Normal Distribution";
         setLimits();
+        num_params = 2;
     }
     
     private void setLimits(){
@@ -42,6 +43,13 @@ public class NormalDistribution extends ContinuousDistribution {
     public double f(double x) {
         double exp = (x-mean);
         return Math.pow(Math.E, -exp*exp/(2*variance))/Math.sqrt(2*variance*Math.PI);
+    }
+    
+    // for testing
+    public static void main(String[] args){
+        NormalDistribution n = new NormalDistribution(0, 1);
+        System.out.println(n.F(1));
+        System.out.println(n.F(2));
     }
     
 }

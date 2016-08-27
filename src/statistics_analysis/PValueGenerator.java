@@ -1,7 +1,7 @@
 
 package statistics_analysis;
 
-import java.util.ArrayList;
+import statistics.ChiSquared;
 import statistics.DataSet;
 import statistics.Datum;
 import statistics.Distribution;
@@ -11,7 +11,11 @@ import statistics.Distribution;
  * @author alyacarina
  */
 
-// This is a class that determines
+// This is a class that determines P Values
+
+// Note that the mean of a given distribution is irrelevant, the code only
+//   finds the best p-value for the given data-set belonging to that distribution
+//   with the optimal mean
 
 public class PValueGenerator {
     
@@ -25,44 +29,43 @@ public class PValueGenerator {
         this.data = next;
     }
     
+    // Calculates pvalue for a given, un-binnified data-set 
     public double getPValue(Distribution d){
-        double mean = findMostLikelyMean(d); // sets mean of d to this
+        d.setMean(data.getMean()); // sets mean of d to most likely mean
         
-        double test_statistic = 0;
+        double lambda = 0;
         for(Datum dt: data.getRawSortedData()){
-            test_statistic += dt.getContent()
-                    *Math.log(dt.getContent()/d.f(dt.getContent()));
+            double e = d.f(dt.getContent())*data.getTotalFrequency();
+            System.out.println(e);
+            double y = dt.frequency;
+            System.out.println(y);
+            
+            lambda += y*Math.log(y/e);
         }
-        test_statistic *= 2;
+        lambda *= 2;
         
-        ChiSquared m = new ChiSquared();
-        return m.F(test_statistic);
+        int k = data.getNumberOfDataPoints()-1-d.getNumberParameters();
+        ChiSquared m = new ChiSquared(k);
+        return 1-m.F(lambda);
     }
     
-    private double findMostLikelyMean(Distribution dist){
-        double max = dist.getLowerLimit();
+    // Calculates pvalue after binnifying the data
+    public double getPValue(Distribution d, double bin_size){
+        double lambda = 0;
+        d.setMean(data.getMean());
         
-        for(double x = dist.getLowerLimit(); x<=dist.getUpperLimit(); x+=dist.getDx()){
-            dist.setMean(x);
-            double gof = getGoodnessOfFit(dist);
-            if(gof>max){
-                max = gof;
-            }
+        DataSet data2 = data.binnify(bin_size);
+        for(Datum dt: data2.getRawSortedData()){
+            double e = (d.F(dt.getContent()+bin_size)-d.F(dt.getContent()))
+                    *data2.getTotalFrequency();
+            double y = dt.frequency;
+            
+            lambda += y*Math.log(y/e);
         }
+        lambda *= 2;
         
-        dist.setMean(max);
-        return max;
+        int k = data2.getRawSortedData().size()-1-d.getNumberParameters();
+        ChiSquared m = new ChiSquared(k);
+        return 1-m.F(lambda);
     }
-    
-    private double getGoodnessOfFit(Distribution dist){
-        double likelihood = 1;
-        
-        ArrayList<Datum> ald = data.getRawSortedData();
-        for(Datum d: ald){
-            likelihood*=Math.pow(dist.f(d.getContent()), d.frequency);
-        }
-        
-        return likelihood;
-    }
-    
 }

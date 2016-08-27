@@ -18,6 +18,7 @@ public class ChiSquared extends ContinuousDistribution {
         lower_lim = 0;
         upper_lim = 10;
         initialize();
+        num_params = 1;
     }
 
     private void initialize(){
@@ -26,11 +27,11 @@ public class ChiSquared extends ContinuousDistribution {
     
     // factorial
     private double gamma(double x) {
-        if (x <= 1) {
-            return 1;
-        } else {
-            return gamma(x - 1) * x;
+        double n = 1;
+        for(int i=2; i<x; i++){
+            n*=i;
         }
+        return n;
     }
     
     @Override
@@ -58,6 +59,18 @@ public class ChiSquared extends ContinuousDistribution {
             double num = Math.pow(x, mean/2 - 1) * Math.exp(-x/2);
             return num/DENOMINATOR;
         }
+    }
+    
+    // Testing
+    public static void main(String[] args){
+        ChiSquared x = new ChiSquared(5);
+        System.out.println(x.f(1));
+        System.out.println(x.F(0.554));
+        x.setMean(10);
+        System.out.println(x.f(1));
+        System.out.println(x.F(9.342));
+        x.setMean(100);
+        System.out.println(x.F(67.328));
     }
 
 }

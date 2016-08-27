@@ -10,11 +10,13 @@ public class ExponentialDistribution extends ContinuousDistribution {
     public ExponentialDistribution(){
         mean = 1;
         name = "Exponential Distribution";
+        num_params = 1;
     }
     
     public ExponentialDistribution(double mean){
         this.mean = mean;
         name = "Exponential Distribution";
+        num_params = 1;
     }
     
     private void setLimits(){

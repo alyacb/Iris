@@ -10,13 +10,18 @@ package statistics;
 
 public abstract class Distribution {
     protected double mean;
-    protected double dx = 0.001;
+    protected double dx = 0.0001;
     protected double lower_lim = 0;
     protected double upper_lim = 1;
     protected String name = "Distribution";
+    protected int num_params;
     
     public String getName(){
         return name;
+    }
+    
+    public int getNumberParameters() {
+        return num_params;
     }
     
     public void setLowerLimit(double l){

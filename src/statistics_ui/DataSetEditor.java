@@ -9,7 +9,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import statistics.ChiSquared;
 import statistics.DataSet;
+import statistics.NormalDistribution;
+import statistics_analysis.PValueGenerator;
 import ui_general_utils.EnterKeyListener;
 
 /**
@@ -93,6 +96,20 @@ public class DataSetEditor extends Panel {
                     graphs.refresh(step_size);
                     return;
                 }
+                
+                i = next.indexOf("eval");
+                if(i!=-1){
+                    PValueGenerator x = new PValueGenerator(ds);
+                    NormalDistribution n = 
+                            new NormalDistribution(ds.getMean(),
+                                                   ds.getStandardDeviation());
+                    System.out.println(x.getPValue(n, step_size));
+                    ChiSquared csd = 
+                            new ChiSquared(1);
+                    System.out.println(x.getPValue(csd, step_size));
+                    System.out.println();
+                    return;
+                }
 
                 double d;
                 try {
@@ -118,8 +135,6 @@ public class DataSetEditor extends Panel {
     }
 
     public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir"));
-
         JFrame lookAtMe = new JFrame("DataSet Editor");
         lookAtMe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         lookAtMe.setLayout(new BorderLayout());
