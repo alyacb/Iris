@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import statistics.ContinuousDistribution;
 import statistics.NormalDistribution;
+import statistics.StudentTDistribution;
 import ui_general_utils.EnterKeyListener;
 
 /**
@@ -61,10 +62,8 @@ public class ContinuousDistributionEditor extends Panel {
                 
                 if(next.contains("mean")){
                     distribution.setMean(x);
-                } else if(next.contains("sd")){
-                    distribution.setStandardDeviation(x);
-                } else if(next.contains("var")){
-                    distribution.setStandardDeviation(Math.sqrt(x));
+                } else if(next.contains("sd") && distribution instanceof NormalDistribution){
+                    ((NormalDistribution)distribution).setStandardDeviation(x);
                 } else {
                     System.out.println("Invalid command.");
                 }
@@ -80,7 +79,7 @@ public class ContinuousDistributionEditor extends Panel {
         JFrame lookAtMe = new JFrame("CDistribution Editor");
         lookAtMe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         lookAtMe.setLayout(new BorderLayout());
-        lookAtMe.add("Center", new ContinuousDistributionEditor(new NormalDistribution(0, 1)));
+        lookAtMe.add("Center", new ContinuousDistributionEditor(new StudentTDistribution(3)));
         lookAtMe.setExtendedState(JFrame.MAXIMIZED_BOTH);
         lookAtMe.setVisible(true);
     }

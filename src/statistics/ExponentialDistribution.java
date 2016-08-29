@@ -29,11 +29,6 @@ public class ExponentialDistribution extends ContinuousDistribution {
         super.setMean(m);
         setLimits();
     }
-    
-    @Override
-    public void setStandardDeviation(double x) {
-        setMean(x);
-    }
 
     @Override
     public double getStandardDeviation() {

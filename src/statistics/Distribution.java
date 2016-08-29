@@ -52,7 +52,6 @@ public abstract class Distribution {
         return mean;
     }
 
-    public abstract void setStandardDeviation(double x);
     public abstract double getStandardDeviation();
     
     // probability

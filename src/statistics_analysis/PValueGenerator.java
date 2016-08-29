@@ -1,7 +1,7 @@
 
 package statistics_analysis;
 
-import statistics.ChiSquared;
+import statistics.ChiSquaredDistribution;
 import statistics.DataSet;
 import statistics.Datum;
 import statistics.Distribution;
@@ -45,7 +45,7 @@ public class PValueGenerator {
         lambda *= 2;
         
         int k = data.getNumberOfDataPoints()-1-d.getNumberParameters();
-        ChiSquared m = new ChiSquared(k);
+        ChiSquaredDistribution m = new ChiSquaredDistribution(k);
         return 1-m.F(lambda);
     }
     
@@ -65,7 +65,7 @@ public class PValueGenerator {
         lambda *= 2;
         
         int k = data2.getRawSortedData().size()-1-d.getNumberParameters();
-        ChiSquared m = new ChiSquared(k);
+        ChiSquaredDistribution m = new ChiSquaredDistribution(k);
         return 1-m.F(lambda);
     }
 }

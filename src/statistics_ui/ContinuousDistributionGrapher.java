@@ -15,7 +15,7 @@ import statistics.ContinuousDistribution;
  * @author alyacarina
  */
 public class ContinuousDistributionGrapher extends Panel {
-    private final ContinuousDistribution distribution;
+    private ContinuousDistribution distribution;
     private Canvas face;
     private Label details;
     private final int x_base, y_base;
@@ -26,6 +26,11 @@ public class ContinuousDistributionGrapher extends Panel {
         
         this.distribution = distribution;
         initialize();
+    }
+    
+    public void setDistribution(ContinuousDistribution distribution){
+        this.distribution = distribution;
+        refresh();
     }
     
     private void initialize(){

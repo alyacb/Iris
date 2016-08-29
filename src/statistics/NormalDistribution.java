@@ -28,7 +28,6 @@ public class NormalDistribution extends ContinuousDistribution {
         setLimits();
     }
     
-    @Override
     public void setStandardDeviation(double x) {
         variance = x*x;
         setLimits();

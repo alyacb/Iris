@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import statistics.ContinuousDistribution;
 import statistics.DataSet;
 import statistics.NormalDistribution;
-import statistics.ChiSquared;
+import statistics.ChiSquaredDistribution;
 import statistics.ExponentialDistribution;
 
 /**
@@ -34,7 +34,7 @@ public class DistributionComparator extends Panel {
         
         distributions = new ContinuousDistribution[]{
             new NormalDistribution(source.getMean(), source.getStandardDeviation()),
-            new ChiSquared((int)source.getMean()),
+            new ChiSquaredDistribution((int)source.getMean()),
             new ExponentialDistribution(source.getMean())
         };
         
@@ -64,12 +64,7 @@ public class DistributionComparator extends Panel {
         bee.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                cdPanel.remove(cdg);
-                cdg = new ContinuousDistributionGrapher(
-                        distributions[distributioner.getSelectedIndex()]
-                );
-                cdPanel.add("Center", cdg);
-                cdPanel.repaint();
+                cdg.setDistribution(distributions[distributioner.getSelectedIndex()]);
             }
         });
         distChooser.add(bee);
@@ -83,7 +78,8 @@ public class DistributionComparator extends Panel {
             public void onRefresh(){
                 super.onRefresh();
                 cd.setMean(source.getMean());
-                cd.setStandardDeviation(source.getStandardDeviation());
+                if(cd instanceof NormalDistribution) 
+                    ((NormalDistribution)cd).setStandardDeviation(source.getStandardDeviation());
                 cdg.refresh();
             }
         };

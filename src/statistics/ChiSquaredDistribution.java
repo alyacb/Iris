@@ -4,11 +4,11 @@ package statistics;
  *
  * @author alyacarina
  */
-public class ChiSquared extends ContinuousDistribution {
+public class ChiSquaredDistribution extends ContinuousDistribution {
 
     private static double DENOMINATOR;
     
-    public ChiSquared(int degrees_of_freedom) {
+    public ChiSquaredDistribution(int degrees_of_freedom) {
         name  = "Chi Squared";
         
         if (degrees_of_freedom < 0) {
@@ -41,12 +41,6 @@ public class ChiSquared extends ContinuousDistribution {
     }
 
     @Override
-    public void setStandardDeviation(double x) {
-        mean = Math.sqrt(x / 2);
-        initialize();
-    }
-
-    @Override
     public double getStandardDeviation() {
         return Math.sqrt(2 * mean);
     }
@@ -63,7 +57,7 @@ public class ChiSquared extends ContinuousDistribution {
     
     // Testing
     public static void main(String[] args){
-        ChiSquared x = new ChiSquared(5);
+        ChiSquaredDistribution x = new ChiSquaredDistribution(5);
         System.out.println(x.f(1));
         System.out.println(x.F(0.554));
         x.setMean(10);
