@@ -1,0 +1,7 @@
+
+These are the basic mathematical distributions known by Iris' statistical engine.
+Their primary purpose is for testing the accuracy of Iris' distribution-matching algorithms.
+
+Implementation notes:
+- New implementation of previous distributions, 
+owing to the disorganized nature of the previous versions of the classes.
