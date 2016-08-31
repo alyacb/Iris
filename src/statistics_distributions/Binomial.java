@@ -1,5 +1,5 @@
 
-package statstics_distributions;
+package statistics_distributions;
 
 /**
  *
