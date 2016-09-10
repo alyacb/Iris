@@ -1,12 +1,15 @@
 
 package statistics_ui;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
-import statistics.Distribution;
+import javax.swing.JFrame;
+import statistics_distributions.Distribution;
+import statistics_distributions.Normal;
 
 /**
  *
@@ -16,6 +19,7 @@ public class DistributionGrapher extends Panel {
     
     private Distribution distribution;
     private Canvas graph;
+    private static final double PADDING = 0.05;
     
     public DistributionGrapher(Distribution distribution){
         super();
@@ -25,6 +29,7 @@ public class DistributionGrapher extends Panel {
     
     private void initialize(){
         this.setBackground(Color.BLACK);
+        this.setLayout(new BorderLayout());
         graph = new Canvas() {
             @Override
             public void paint(Graphics g){
@@ -33,39 +38,43 @@ public class DistributionGrapher extends Panel {
                                        (int) (150 * Math.random()+105),
                                        (int) (150 * Math.random()+105)));
                 
-                int x_min = getWidth()/10;
+                int x_min = (int) (getWidth()*PADDING);
                 int x_max = getWidth() - x_min;
-                int y_min = getHeight()/10;
-                int height = getHeight()*8/10;
+                int y_min = (int) (getHeight()*PADDING);
+                int height = (int) (getHeight()*(1-2*PADDING));
                 
                 int mean_loc = getWidth()/2;
                 
-                // graph left of mean
-                int y;
-                int x = mean_loc;
-                double val = distribution.getMean();
-                while(x>=x_min){
-                    y = (int) (distribution.f(val)*height) + y_min;
-                    
-                    val-=distribution.getDx();
-                    x--;
-                }
-                
-                // graph right of mean
-                x = mean_loc+1;
-                val = distribution.getMean()+distribution.getDx();
+                int x = x_min;
+                double val = distribution.getMean()-distribution.getDX()*(mean_loc-x_min);
+                int y = (int) (distribution.f(val)*height) + y_min;
                 while(x<=x_max){
-                    y = (int) (distribution.f(val)*height) + y_min;
+                    val+=distribution.getDX();
+                    int x_next = x+1;
+                    int y_next = (int) (distribution.f(val)*height) + y_min;
                     
-                    val+=distribution.getDx();
-                    x++;
+                    g2d.drawLine(x, getHeight() - y, x_next, getHeight() - y_next);
+                    
+                    x = x_next;
+                    y = y_next;
                 }
             }
         };
+        this.add("Center", graph);
     }
     
     public final void setDistribution(Distribution distribution){
         this.distribution = distribution;
+        repaint();
     }
     
+    public static void main(String[] args){
+        JFrame lookAtMe = new JFrame("DataSet Grapher");
+        lookAtMe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        lookAtMe.setLayout(new BorderLayout());
+        DistributionGrapher m = new DistributionGrapher(new Normal(0, 1));
+        lookAtMe.add("Center", m);
+        lookAtMe.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        lookAtMe.setVisible(true);
+    }
 }

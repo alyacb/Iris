@@ -16,7 +16,8 @@ public class ChiSquared extends ContinuousDistribution {
         if(k<=0){
             throwBadArgs();
         }
-        COEFFICIENT = 1/(Math.pow(2, k/2)*factorial(k/2-1));
+        double x = gamma((double)k/2);
+        COEFFICIENT = 1/(Math.pow(2, (double)k/2)*gamma((double)k/2));
     }
 
     @Override
@@ -34,7 +35,7 @@ public class ChiSquared extends ContinuousDistribution {
         if(x<=0){
             return 0;
         }
-        return COEFFICIENT*Math.pow(x, getParameter(0)/2-1)*Math.exp(-x/2);
+        return COEFFICIENT*Math.pow(x, (getParameter(0)/2)-1)*Math.exp(-x/2);
     }
     
 }

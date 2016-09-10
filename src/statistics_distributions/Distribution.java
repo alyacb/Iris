@@ -88,6 +88,27 @@ public abstract class Distribution {
         return factorial(maxi)/(factorial(mini)*factorial(maxi-mini));
     }
     
+    protected final double gamma(double t){
+        /*if(n - (int)n == 0) return factorial((int)n-1);
+        
+        double result = 0; 
+        for(double x = 0; x<10000; x+=0.01){
+            if(n-1<0 && x==0) continue;
+            result += 0.01*Math.pow(x, n-1)*Math.exp(-x);
+            
+        }*/
+        
+        // Euler
+        double result = 1/t;
+        for(int n=1; n<100000; n++){
+            double num = Math.pow(1+1/(double)n, t);
+            double denom = (1+t/(double)n);
+            result*=num;
+            result/=denom;
+        }
+        return result;
+    }
+    
     // Probability Density Function
     public abstract double f(double x);
     

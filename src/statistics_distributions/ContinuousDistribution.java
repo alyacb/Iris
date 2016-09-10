@@ -9,7 +9,7 @@ public abstract class ContinuousDistribution extends Distribution {
 
     // Abstract superglass for grouping continuous distributions
     
-    private static final double CONTINUOUS_DX = 0.0001;
+    private static final double CONTINUOUS_DX = 0.01;
     
     public ContinuousDistribution(String name, double[] parameters){
         super(name, parameters);
