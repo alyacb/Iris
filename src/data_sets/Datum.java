@@ -1,5 +1,5 @@
 
-package statistics;
+package data_sets;
 
 /**
  *

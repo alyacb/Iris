@@ -6,36 +6,36 @@ import java.awt.Button;
 import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import statistics.ContinuousDistribution;
-import statistics.DataSet;
-import statistics.NormalDistribution;
-import statistics.ChiSquaredDistribution;
-import statistics.ExponentialDistribution;
+import data_sets.DataSet;
+import statistics_distributions.ChiSquared;
+import statistics_distributions.ContinuousDistribution;
+import statistics_distributions.Distribution;
+import statistics_distributions.Exponential;
+import statistics_distributions.Normal;
 
 /**
  *
  * @author alyacarina
  */
 public class DistributionComparator extends Panel {
-    private DataSet source;
-    private double step_size;
-    private ContinuousDistribution cd;
-    private ContinuousDistributionGrapher cdg;
+    private final DataSet source;
+    private final double step_size;
+    private final Distribution cd;
+    private DistributionGrapher cdg;
     private Panel cdPanel, dsPanel, distChooser;
     private JComboBox distributioner;
-    private ContinuousDistribution[] distributions;
+    private final Distribution[] distributions;
     
     public DistributionComparator(){
         source = new DataSet();
         step_size = 1;
         
         distributions = new ContinuousDistribution[]{
-            new NormalDistribution(source.getMean(), source.getStandardDeviation()),
-            new ChiSquaredDistribution((int)source.getMean()),
-            new ExponentialDistribution(source.getMean())
+            new Normal(source.getMean(), source.getStandardDeviation()),
+            new ChiSquared((int)source.getMean()),
+            new Exponential(source.getMean())
         };
         
         cd = distributions[0];
@@ -48,7 +48,7 @@ public class DistributionComparator extends Panel {
         
         cdPanel = new Panel();
         cdPanel.setLayout(new BorderLayout());
-        cdg = new ContinuousDistributionGrapher(cd);
+        cdg = new DistributionGrapher(cd);
         cdPanel.add("Center", cdg);
         
         distChooser = new Panel();
@@ -61,11 +61,8 @@ public class DistributionComparator extends Panel {
         distributioner = new JComboBox(names);
         distChooser.add(distributioner);
         Button bee = new Button("Set Distribution");
-        bee.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cdg.setDistribution(distributions[distributioner.getSelectedIndex()]);
-            }
+        bee.addActionListener((ActionEvent e) -> {
+            cdg.setDistribution(distributions[distributioner.getSelectedIndex()]);
         });
         distChooser.add(bee);
         cdPanel.add("North", distChooser);
@@ -78,9 +75,9 @@ public class DistributionComparator extends Panel {
             public void onRefresh(){
                 super.onRefresh();
                 cd.setMean(source.getMean());
-                if(cd instanceof NormalDistribution) 
-                    ((NormalDistribution)cd).setStandardDeviation(source.getStandardDeviation());
-                cdg.refresh();
+                if(cd instanceof Normal) 
+                    ((Normal)cd).setStandardDeviation(source.getStandardDeviation());
+                cdg.repaint();
             }
         };
         dsPanel.add(dse);

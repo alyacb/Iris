@@ -9,10 +9,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import statistics.ChiSquaredDistribution;
-import statistics.DataSet;
-import statistics.NormalDistribution;
+import data_sets.DataSet;
 import statistics_analysis.PValueGenerator;
+import statistics_distributions.ChiSquared;
+import statistics_distributions.Normal;
 import ui_general_utils.EnterKeyListener;
 
 /**
@@ -100,12 +100,12 @@ public class DataSetEditor extends Panel {
                 i = next.indexOf("eval");
                 if(i!=-1){
                     PValueGenerator x = new PValueGenerator(ds);
-                    NormalDistribution n = 
-                            new NormalDistribution(ds.getMean(),
+                    Normal n = 
+                            new Normal(ds.getMean(),
                                                    ds.getStandardDeviation());
                     System.out.println(x.getPValue(n, step_size));
-                    ChiSquaredDistribution csd = 
-                            new ChiSquaredDistribution(1);
+                    ChiSquared csd = 
+                            new ChiSquared(1);
                     System.out.println(x.getPValue(csd, step_size));
                     System.out.println();
                     return;

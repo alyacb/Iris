@@ -8,8 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
 import javax.swing.JFrame;
-import statistics.DataSet;
-import statistics.Datum;
+import data_sets.DataSet;
+import data_sets.Datum;
 
 /**
  *

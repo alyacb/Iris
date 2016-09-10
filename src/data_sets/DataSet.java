@@ -1,4 +1,4 @@
-package statistics;
+package data_sets;
 
 import java.util.ArrayList;
 

@@ -16,7 +16,9 @@ public class StudentT extends ContinuousDistribution {
         if(k<=0){
             throwBadArgs();
         }
-        COEFFICIENT = factorial((k+1)/2-1)/(Math.sqrt(Math.PI*k)*factorial(k/2-1));
+        double num = gamma((double)(k+1)/2);
+        double denom = (Math.sqrt(Math.PI*k)*gamma(((double)k)/2));
+        COEFFICIENT = num/denom;
     }
 
     @Override
@@ -33,5 +35,4 @@ public class StudentT extends ContinuousDistribution {
     public double f(double x) {
         return COEFFICIENT*Math.pow(1+x*x/getParameter(0), -(getParameter(0)+1)/2);
     }
-    
 }
