@@ -8,7 +8,7 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import data_sets.DataSet;
+import statistics_analysis.DataSet;
 import statistics_distributions.ChiSquared;
 import statistics_distributions.ContinuousDistribution;
 import statistics_distributions.Distribution;
@@ -74,9 +74,7 @@ public class DistributionComparator extends Panel {
             @Override
             public void onRefresh(){
                 super.onRefresh();
-                cd.setMean(source.getMean());
-                if(cd instanceof Normal) 
-                    ((Normal)cd).setStandardDeviation(source.getStandardDeviation());
+                // set parameters accordingly
                 cdg.repaint();
             }
         };

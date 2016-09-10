@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -62,6 +64,10 @@ public abstract class Distribution {
         DX = dx;
     }
     
+    public final void setParameter(int i, double value){
+        parameters[i] = value;
+    }
+    
     // method for integration of f(x)
     protected final double integrate_f(double a, double b){
         double lower_limit = Math.min(a, b);
@@ -116,4 +122,8 @@ public abstract class Distribution {
     public double F(double x){
         return integrate_f(getMean() - 5*getStandardDeviation(), x);
     }
+
+    // Estimate ith parameter in a distribution, based on dataset's values
+    //    (assuming data is drawn from this distribution)
+    public abstract double estimateParameter(int i, DataSet data);
 }

@@ -1,8 +1,6 @@
 
 package statistics_analysis;
 
-import data_sets.DataSet;
-import data_sets.Datum;
 import statistics_distributions.ChiSquared;
 import statistics_distributions.Distribution;
 
@@ -29,30 +27,13 @@ public class PValueGenerator {
         this.data = next;
     }
     
-    // Calculates pvalue for a given, un-binnified data-set 
-    public double getPValue(Distribution d){
-        d.setMean(data.getMean()); // sets mean of d to most likely mean
-        
-        double lambda = 0;
-        for(Datum dt: data.getRawSortedData()){
-            double e = d.f(dt.getContent())*data.getTotalFrequency();
-            System.out.println(e);
-            double y = dt.frequency;
-            System.out.println(y);
-            
-            lambda += y*Math.log(y/e);
-        }
-        lambda *= 2;
-        
-        int k = data.getNumberOfDataPoints()-1-d.getNumberOfParameters();
-        ChiSquared m = new ChiSquared(k);
-        return 1-m.F(lambda);
-    }
-    
     // Calculates pvalue after binnifying the data
-    public double getPValue(Distribution d, double bin_size){
+    //    Note: bin_size of 0 looks at original, un-binnified dataset
+    public double getPValue(Distribution d, double bin_size){ 
         double lambda = 0;
-        d.setMean(data.getMean());
+        for(int i = 0; i<d.getNumberOfParameters(); i++){
+            d.setParameter(i, d.estimateParameter(i, data));
+        }
         
         DataSet data2 = data.binnify(bin_size);
         for(Datum dt: data2.getRawSortedData()){

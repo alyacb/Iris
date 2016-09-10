@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import data_sets.DataSet;
+import statistics_analysis.DataSet;
 import statistics_analysis.PValueGenerator;
 import statistics_distributions.ChiSquared;
 import statistics_distributions.Normal;
