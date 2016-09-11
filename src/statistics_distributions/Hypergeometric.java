@@ -44,5 +44,4 @@ public class Hypergeometric extends DiscreteDistribution {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    
 }
