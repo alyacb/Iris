@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -33,6 +35,15 @@ public class Uniform extends ContinuousDistribution {
         }
         
         return 1/(getParameter(1)-getParameter(0));
+    }
+
+    @Override
+    protected double est_param_impl(int i, DataSet data) {
+        if(i==0){
+            return data.getMin();
+        } else {
+            return data.getMax();
+        }
     }
     
 }

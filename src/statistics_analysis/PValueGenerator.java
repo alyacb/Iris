@@ -31,11 +31,11 @@ public class PValueGenerator {
     //    Note: bin_size of 0 looks at original, un-binnified dataset
     public double getPValue(Distribution d, double bin_size){ 
         double lambda = 0;
+        DataSet data2 = data.binnify(bin_size);
         for(int i = 0; i<d.getNumberOfParameters(); i++){
-            d.setParameter(i, d.estimateParameter(i, data));
+            d.setParameter(i, d.estimateParameter(i, data2));
         }
         
-        DataSet data2 = data.binnify(bin_size);
         for(Datum dt: data2.getRawSortedData()){
             double e = (d.F(dt.getContent()+bin_size)-d.F(dt.getContent()))
                     *data2.getTotalFrequency();

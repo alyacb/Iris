@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -32,6 +34,11 @@ public class Exponential extends ContinuousDistribution {
             return 0;
         }
         return Math.exp(-x/getParameter(0))/getParameter(0);
+    }
+
+    @Override
+    public double est_param_impl(int i, DataSet data) {
+        return data.getMean();
     }
     
 }

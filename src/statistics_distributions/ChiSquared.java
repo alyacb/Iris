@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -36,6 +38,11 @@ public class ChiSquared extends ContinuousDistribution {
             return 0;
         }
         return COEFFICIENT*Math.pow(x, (getParameter(0)/2)-1)*Math.exp(-x/2);
+    }
+
+    @Override
+    public double est_param_impl(int i, DataSet data) {
+        return data.getMean();
     }
     
 }

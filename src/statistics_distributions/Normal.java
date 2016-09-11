@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -32,6 +34,15 @@ public class Normal extends ContinuousDistribution {
     @Override
     public double f(double x) {
         return COEFFICIENT*Math.exp(-Math.pow(x-getMean(), 2));
+    }
+
+    @Override
+    public double est_param_impl(int i, DataSet data) {
+        if(i == 1) {
+            return data.getMean();
+        } else {
+            return data.getStandardDeviation();
+        }
     }
     
 }

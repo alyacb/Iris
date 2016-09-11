@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -32,6 +34,11 @@ public class Poisson extends DiscreteDistribution {
     @Override
     public double getVariance() {
         return getMean();
+    }
+
+    @Override
+    protected double est_param_impl(int i, DataSet data) {
+        return data.getMean();
     }
     
 }

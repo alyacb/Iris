@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -36,5 +38,11 @@ public class Hypergeometric extends DiscreteDistribution {
         int n = (int)getParameter(2);
         return getMean()*(1-r/N)*(N-n)/(n-1);
     }
+
+    @Override
+    protected double est_param_impl(int i, DataSet data) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     
 }

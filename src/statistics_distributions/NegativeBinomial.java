@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -33,6 +35,11 @@ public class NegativeBinomial extends DiscreteDistribution {
     @Override
     public double getVariance() {
         return getMean()/getParameter(1);
+    }
+
+    @Override
+    protected double est_param_impl(int i, DataSet data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

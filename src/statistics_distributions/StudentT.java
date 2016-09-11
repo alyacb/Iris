@@ -1,6 +1,8 @@
 
 package statistics_distributions;
 
+import statistics_analysis.DataSet;
+
 /**
  *
  * @author alyacarina
@@ -34,5 +36,11 @@ public class StudentT extends ContinuousDistribution {
     @Override
     public double f(double x) {
         return COEFFICIENT*Math.pow(1+x*x/getParameter(0), -(getParameter(0)+1)/2);
+    }
+
+    @Override
+    protected double est_param_impl(int i, DataSet data) {
+        double variance = data.getVariance();
+        return variance*2/(variance-1);
     }
 }

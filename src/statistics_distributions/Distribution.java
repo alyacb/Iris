@@ -125,5 +125,14 @@ public abstract class Distribution {
 
     // Estimate ith parameter in a distribution, based on dataset's values
     //    (assuming data is drawn from this distribution)
-    public abstract double estimateParameter(int i, DataSet data);
+    public final double estimateParameter(int i, DataSet data){
+        if(i<0 || i>getNumberOfParameters()) {
+            throwBadArgs();
+            return -1;
+        }
+        return est_param_impl(i, data);
+    }
+    
+    // implementation of above, unique to each distribution
+    protected abstract double est_param_impl(int i, DataSet data);
 }
