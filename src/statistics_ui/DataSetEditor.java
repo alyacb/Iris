@@ -23,11 +23,18 @@ public class DataSetEditor extends Panel {
 
     private DataSet ds;
     private double step_size;
+    private DataSetGrapher graphs;
 
     public DataSetEditor(DataSet ds) {
         this.ds = ds;
         step_size = 1;
         initialize();
+    }
+    
+    public final void setDataSet(DataSet ds1){
+        ds = ds1;
+        graphs.setDataSet(ds1);
+        graphs.refresh(step_size);
     }
 
     // Allows containers/ subclasses to add extra refresh functionality
@@ -36,7 +43,7 @@ public class DataSetEditor extends Panel {
 
     private void initialize() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        DataSetGrapher graphs = new DataSetGrapher(ds) {
+        graphs = new DataSetGrapher(ds) {
             @Override
             public void refresh(double step_size) {
                 super.refresh(step_size);

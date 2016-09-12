@@ -18,7 +18,6 @@ public class ChiSquared extends ContinuousDistribution {
         if(k<=0){
             throwBadArgs();
         }
-        double x = gamma((double)k/2);
         COEFFICIENT = 1/(Math.pow(2, (double)k/2)*gamma((double)k/2));
     }
 
@@ -44,5 +43,4 @@ public class ChiSquared extends ContinuousDistribution {
     public double est_param_impl(int i, DataSet data) {
         return data.getMean();
     }
-    
 }

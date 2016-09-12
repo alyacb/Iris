@@ -19,7 +19,7 @@ import statistics_analysis.Datum;
 // Graphs the frequency distribution of bins based on the size of each bin
 
 public class DataSetGrapher extends Panel {
-    private final DataSet data;
+    private DataSet data;
     private DataSet bin;
     private Canvas face;
     private double step_size;
@@ -39,6 +39,7 @@ public class DataSetGrapher extends Panel {
     
     private void initialize(){
         setLayout(new BorderLayout());
+        setBackground(Color.black);
 
         face = new Canvas(){
             @Override
@@ -57,9 +58,9 @@ public class DataSetGrapher extends Panel {
                     int y = (int) ((height - y_base)* 
                             ((double)thing.frequency/
                              (double)bin.getTotalFrequency()));
-                    g2d.setColor(new Color((int) (255 * Math.random()),
-                                            (int) (255 * Math.random()),
-                                            (int) (255 * Math.random())));
+                    g2d.setColor(new Color((int) (205 * Math.random()+50),
+                                            (int) (205 * Math.random()+50),
+                                            (int) (205 * Math.random()+50)));
                     g2d.fillRect(x0, height-y, bin_width, y);
                     g2d.drawString("["+thing.getContent()+"-"+
                             (thing.getContent()+step_size)
@@ -68,7 +69,7 @@ public class DataSetGrapher extends Panel {
                     x0 += bin_width;
                 }
                 
-                g2d.setColor(Color.black);
+                g2d.setColor(Color.white);
                 g2d.drawString("0", padding, height);
                 g2d.drawString("1", padding, y_base);
                 
@@ -77,7 +78,10 @@ public class DataSetGrapher extends Panel {
             }
         };
         add("Center", face);
-        //resize(face);
+    }
+    
+    public final void setDataSet(DataSet ds1){
+        data = ds1;
     }
     
     public void refresh(double step_size){

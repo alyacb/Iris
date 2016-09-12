@@ -8,8 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
 import javax.swing.JFrame;
+import statistics_distributions.ChiSquared;
 import statistics_distributions.Distribution;
-import statistics_distributions.StudentT;
 
 /**
  *
@@ -72,7 +72,7 @@ public class DistributionGrapher extends Panel {
         JFrame lookAtMe = new JFrame("DataSet Grapher");
         lookAtMe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         lookAtMe.setLayout(new BorderLayout());
-        DistributionGrapher m = new DistributionGrapher(new StudentT(100));
+        DistributionGrapher m = new DistributionGrapher(new ChiSquared(10));
         lookAtMe.add("Center", m);
         lookAtMe.setExtendedState(JFrame.MAXIMIZED_BOTH);
         lookAtMe.setVisible(true);
