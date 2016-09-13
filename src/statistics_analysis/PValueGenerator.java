@@ -33,6 +33,7 @@ public class PValueGenerator {
         double lambda = 0;
         DataSet data2 = data.binnify(bin_size);
         for(int i = 0; i<d.getNumberOfParameters(); i++){
+            System.out.println(d.estimateParameter(i, data2));
             d.setParameter(i, d.estimateParameter(i, data2));
         }
         

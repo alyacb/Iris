@@ -38,7 +38,7 @@ public class Normal extends ContinuousDistribution {
 
     @Override
     public double est_param_impl(int i, DataSet data) {
-        if(i == 1) {
+        if(i == 0) {
             return data.getMean();
         } else {
             return data.getStandardDeviation();

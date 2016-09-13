@@ -30,8 +30,8 @@ public class DataSetEditor extends Panel {
         step_size = 1;
         initialize();
     }
-    
-    public final void setDataSet(DataSet ds1){
+
+    public final void setDataSet(DataSet ds1) {
         ds = ds1;
         graphs.setDataSet(ds1);
         graphs.refresh(step_size);
@@ -82,7 +82,7 @@ public class DataSetEditor extends Panel {
                                             } else {
                                                 sub = nextLine.substring(j);
                                             }
-                                            
+
                                             break;
                                         }
                                     }
@@ -103,16 +103,16 @@ public class DataSetEditor extends Panel {
                     graphs.refresh(step_size);
                     return;
                 }
-                
+
                 i = next.indexOf("eval");
-                if(i!=-1){
+                if (i != -1) {
                     PValueGenerator x = new PValueGenerator(ds);
-                    Normal n = 
-                            new Normal(ds.getMean(),
-                                                   ds.getStandardDeviation());
+                    Normal n
+                            = new Normal(ds.getMean(),
+                                    ds.getStandardDeviation());
                     System.out.println(x.getPValue(n, step_size));
-                    ChiSquared csd = 
-                            new ChiSquared(1);
+                    ChiSquared csd
+                            = new ChiSquared(1);
                     System.out.println(x.getPValue(csd, step_size));
                     System.out.println();
                     return;
@@ -122,14 +122,19 @@ public class DataSetEditor extends Panel {
                 try {
                     d = Double.parseDouble(next.substring(1));
                 } catch (Exception ep) {
+                    if (next.contains("compare")) {
+                        PValueGenerator pvg = new PValueGenerator(ds);
+                        System.out.println("x");
+                        System.out.println(pvg.getPValue(new Normal(0, 1), step_size));
+                    }
                     return;
                 }
 
-                if (next.contains("a")) {
+                if (next.contains("add")) {
                     ds.addDatum(d);
-                } else if (next.contains("r")) {
+                } else if (next.contains("remove")) {
                     ds.removeDatum(d);
-                } else if (next.contains("s")) {
+                } else if (next.contains("step")) {
                     step_size = d;
                 } else {
                     return;
