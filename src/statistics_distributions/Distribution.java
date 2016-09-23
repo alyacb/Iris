@@ -52,7 +52,7 @@ public abstract class Distribution {
         String s = name;
         s+='(';
         for(int n=0; n<parameters.length-1; n++){
-            s+=parameters[n]+',';
+            s+=parameters[n]+", ";
         }
         s+=parameters[parameters.length-1];
         s+=')';
@@ -83,7 +83,11 @@ public abstract class Distribution {
     protected final int factorial(int n){
         int result = 1;
         for(int i=2; i<=n; i++){
-            result*=i;
+            System.out.println(result);
+            result = result *i;
+        }
+        if(result == 0){
+            return -1;
         }
         return result;
     }

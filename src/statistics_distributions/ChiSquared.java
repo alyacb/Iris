@@ -41,6 +41,6 @@ public class ChiSquared extends ContinuousDistribution {
 
     @Override
     public double est_param_impl(int i, DataSet data) {
-        return data.getMean();
+        return (int)data.getMean();
     }
 }

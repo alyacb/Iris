@@ -12,7 +12,9 @@ import javax.swing.JFrame;
 import statistics_analysis.DataSet;
 import statistics_analysis.PValueGenerator;
 import statistics_distributions.ChiSquared;
+import statistics_distributions.Exponential;
 import statistics_distributions.Normal;
+import statistics_distributions.StudentT;
 import ui_general_utils.EnterKeyListener;
 
 /**
@@ -104,28 +106,17 @@ public class DataSetEditor extends Panel {
                     return;
                 }
 
-                i = next.indexOf("eval");
-                if (i != -1) {
-                    PValueGenerator x = new PValueGenerator(ds);
-                    Normal n
-                            = new Normal(ds.getMean(),
-                                    ds.getStandardDeviation());
-                    System.out.println(x.getPValue(n, step_size));
-                    ChiSquared csd
-                            = new ChiSquared(1);
-                    System.out.println(x.getPValue(csd, step_size));
-                    System.out.println();
-                    return;
-                }
-
                 double d;
                 try {
-                    d = Double.parseDouble(next.substring(1));
+                    d = Double.parseDouble(next.substring(next.indexOf(" ")));
                 } catch (Exception ep) {
                     if (next.contains("compare")) {
+                        System.out.println("loading...");
                         PValueGenerator pvg = new PValueGenerator(ds);
-                        System.out.println("x");
-                        System.out.println(pvg.getPValue(new Normal(0, 1), step_size));
+                        System.out.println(pvg.getPValue(new Normal(9,0.2), step_size));
+                        System.out.println(pvg.getPValue(new Exponential(2), step_size));
+                        System.out.println(pvg.getPValue(new ChiSquared(1), step_size));
+                        System.out.println(pvg.getPValue(new StudentT(2), step_size));
                     }
                     return;
                 }

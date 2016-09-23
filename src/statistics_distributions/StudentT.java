@@ -45,6 +45,7 @@ public class StudentT extends ContinuousDistribution {
     @Override
     protected double est_param_impl(int i, DataSet data) {
         double variance = data.getVariance();
-        return variance * 2 / (variance - 1);
+        return (int)(variance * 2 / (variance - 1));
     }
+    
 }

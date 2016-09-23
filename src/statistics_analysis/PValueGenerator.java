@@ -33,20 +33,30 @@ public class PValueGenerator {
         double lambda = 0;
         DataSet data2 = data.binnify(bin_size);
         for(int i = 0; i<d.getNumberOfParameters(); i++){
-            System.out.println(d.estimateParameter(i, data2));
             d.setParameter(i, d.estimateParameter(i, data2));
         }
+        System.out.println(d);
         
+        int i = 0;
         for(Datum dt: data2.getRawSortedData()){
-            double e = (d.F(dt.getContent()+bin_size)-d.F(dt.getContent()))
-                    *data2.getTotalFrequency();
+            double e;
+            if(i==0){
+                e = d.F(dt.getContent())*data.getTotalFrequency();
+            } else if(i==data2.getRawSortedData().size()-1) {
+                e = (1 - d.F(dt.getContent()+bin_size))*data.getTotalFrequency();
+            } else {
+                e = (d.F(dt.getContent()+bin_size)-d.F(dt.getContent()))
+                        *data.getTotalFrequency();
+            }
             double y = dt.frequency;
             
             lambda += y*Math.log(y/e);
+            i++;
         }
         lambda *= 2;
         
         int k = data2.getRawSortedData().size()-1-d.getNumberOfParameters();
+        System.out.println(k);
         ChiSquared m = new ChiSquared(k);
         return 1-m.F(lambda);
     }
