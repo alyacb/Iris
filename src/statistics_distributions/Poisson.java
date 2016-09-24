@@ -11,14 +11,11 @@ public class Poisson extends DiscreteDistribution {
 
     // this class implements the Poisson distribution
     
-    private static double coefficient;
+    private double coefficient;
     
     public Poisson(double theta) {
         super("Poisson", new double[]{theta}, Double.MAX_VALUE);
-        if(theta<=0){
-            throwBadArgs();
-        }
-        coefficient = Math.exp(-theta);
+        validate();
     }
 
     @Override
@@ -39,6 +36,14 @@ public class Poisson extends DiscreteDistribution {
     @Override
     protected double est_param_impl(int i, DataSet data) {
         return data.getMean();
+    }
+
+    @Override
+    protected final void validate() throws IllegalArgumentException {
+        if(getParameter(0)<=0){
+            throwBadArgs();
+        }
+        coefficient = Math.exp(-getParameter(0));
     }
     
 }

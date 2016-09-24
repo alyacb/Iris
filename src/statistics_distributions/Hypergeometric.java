@@ -13,9 +13,7 @@ public class Hypergeometric extends DiscreteDistribution {
     
     public Hypergeometric(int N, int r, int n) {
         super("Hypergeometric", new double[]{N, r, n}, Math.min(r, n));
-        if(N<=r || N<=n){
-            throwBadArgs();
-        }
+        validate();
     }
 
     @Override
@@ -42,6 +40,16 @@ public class Hypergeometric extends DiscreteDistribution {
     @Override
     protected double est_param_impl(int i, DataSet data) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected final void validate() throws IllegalArgumentException {
+        int N = (int)getParameter(0);
+        int r = (int)getParameter(1);
+        int n = (int)getParameter(2);
+        if(N<=r || N<=n){
+            throwBadArgs();
+        }
     }
 
 }

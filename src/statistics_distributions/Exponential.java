@@ -13,9 +13,7 @@ public class Exponential extends ContinuousDistribution {
     
     public Exponential(double theta) {
         super("Exponential", new double[]{theta});
-        if(theta <= 0){
-            throwBadArgs();
-        }
+        validate();
     }
 
     @Override
@@ -39,6 +37,13 @@ public class Exponential extends ContinuousDistribution {
     @Override
     public double est_param_impl(int i, DataSet data) {
         return data.getMean();
+    }
+
+    @Override
+    protected final void validate() throws IllegalArgumentException {
+        if(getParameter(0) <= 0){
+            throwBadArgs();
+        }
     }
     
 }

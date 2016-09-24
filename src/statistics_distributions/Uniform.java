@@ -13,9 +13,7 @@ public class Uniform extends ContinuousDistribution {
     
     public Uniform(int a, int b) {
         super("Uniform", new double[]{Math.min(a, b), Math.max(a, b)});
-        if(a==b){
-            throwBadArgs();
-        }
+        validate();
     }
 
     @Override
@@ -43,6 +41,13 @@ public class Uniform extends ContinuousDistribution {
             return data.getMin();
         } else {
             return data.getMax();
+        }
+    }
+
+    @Override
+    protected final void validate() throws IllegalArgumentException {
+        if(getParameter(0)==getParameter(1)){
+            throwBadArgs();
         }
     }
     

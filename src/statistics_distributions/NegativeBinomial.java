@@ -13,9 +13,7 @@ public class NegativeBinomial extends DiscreteDistribution {
     
     public NegativeBinomial(int k, double p) {
         super("Negative Binomial", new double[]{k, p}, Double.MAX_VALUE);
-        if(p<0 || p>1){
-            throwBadArgs();
-        }
+        validate();
     }
 
     @Override
@@ -40,6 +38,13 @@ public class NegativeBinomial extends DiscreteDistribution {
     @Override
     protected double est_param_impl(int i, DataSet data) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected final void validate() throws IllegalArgumentException {
+           if(getParameter(1)<0 || getParameter(1)>1 || getParameter(0)<0){
+            throwBadArgs();
+        }
     }
     
 }

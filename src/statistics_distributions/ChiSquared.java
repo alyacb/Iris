@@ -11,14 +11,11 @@ public class ChiSquared extends ContinuousDistribution {
     
     // This class implements the Chi-Squared distribution
 
-    private final double COEFFICIENT;
+    private double COEFFICIENT;
     
     public ChiSquared(int k) {
         super("Chi-Squared", new double[]{k});
-        if(k<=0){
-            throwBadArgs();
-        }
-        COEFFICIENT = 1/(Math.pow(2, (double)k/2)*gamma((double)k/2));
+        validate();
     }
 
     @Override
@@ -42,5 +39,13 @@ public class ChiSquared extends ContinuousDistribution {
     @Override
     public double est_param_impl(int i, DataSet data) {
         return (int)data.getMean();
+    }
+
+    @Override
+    protected final void validate() throws IllegalArgumentException {
+        if(getParameter(0)<=0 || getParameter(0)!=(int)getParameter(0)){
+            throwBadArgs();
+        }
+        COEFFICIENT = 1/(Math.pow(2, (double)getParameter(0)/2)*gamma((double)getParameter(0)/2));
     }
 }

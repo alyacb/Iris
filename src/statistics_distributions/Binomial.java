@@ -13,9 +13,7 @@ public class Binomial extends DiscreteDistribution {
     
     public Binomial(int n, double p){
         super("Binomial", new double[]{n, p}, n);
-        if(p<0 || p>1){
-            throwBadArgs();
-        }
+        validate();
     }
     
     @Override
@@ -41,6 +39,13 @@ public class Binomial extends DiscreteDistribution {
             return data.getTotalFrequency();
         } else {
             return data.getMean()/data.getTotalFrequency();
+        }
+    }
+
+    @Override
+    protected final void validate() throws IllegalArgumentException {
+        if(getParameter(1)<0 || getParameter(1)>1 || getParameter(0)<0){
+            throwBadArgs();
         }
     }
     

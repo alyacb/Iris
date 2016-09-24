@@ -66,6 +66,7 @@ public abstract class Distribution {
     
     public final void setParameter(int i, double value){
         parameters[i] = value;
+        validate();
     }
     
     // method for integration of f(x)
@@ -139,4 +140,7 @@ public abstract class Distribution {
     
     // implementation of above, unique to each distribution
     protected abstract double est_param_impl(int i, DataSet data);
+    
+    // validates the arguments of the distribution
+    protected abstract void validate() throws IllegalArgumentException;
 }
