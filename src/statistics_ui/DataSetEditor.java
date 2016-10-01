@@ -11,10 +11,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import statistics_analysis.DataSet;
 import statistics_analysis.PValueGenerator;
-import statistics_distributions.ChiSquared;
-import statistics_distributions.Exponential;
-import statistics_distributions.Normal;
-import statistics_distributions.StudentT;
+import statistics_distributions.Binomial;
+import statistics_distributions.Hypergeometric;
+import statistics_distributions.NegativeBinomial;
+import statistics_distributions.Poisson;
 import ui_general_utils.EnterKeyListener;
 
 /**
@@ -113,10 +113,10 @@ public class DataSetEditor extends Panel {
                     if (next.contains("compare")) {
                         System.out.println("loading...");
                         PValueGenerator pvg = new PValueGenerator(ds);
-                        System.out.println(pvg.getPValue(new Normal(9,0.2), step_size));
-                        System.out.println(pvg.getPValue(new Exponential(2), step_size));
-                        System.out.println(pvg.getPValue(new ChiSquared(1), step_size));
-                        System.out.println(pvg.getPValue(new StudentT(2), step_size));
+                        System.out.println(pvg.getPValue(new Poisson(5), step_size));
+                        System.out.println(pvg.getPValue(new Binomial(5, 0.5), step_size));
+                        System.out.println(pvg.getPValue(new NegativeBinomial(5, 0.5), step_size));
+                        System.out.println(pvg.getPValue(new Hypergeometric(10, 5, 3), step_size));
                     }
                     return;
                 }

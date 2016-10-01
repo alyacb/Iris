@@ -81,34 +81,21 @@ public abstract class Distribution {
     }
     
     // Methods used by several subclasses in PDF
-    protected final int factorial(int n){
-        int result = 1;
+    protected final long factorial(long n){
+        long result = 1;
         for(int i=2; i<=n; i++){
-            System.out.println(result);
             result = result *i;
-        }
-        if(result == 0){
-            return -1;
         }
         return result;
     }
     
-    protected final int choose(int a, int b){
-        int maxi = Math.max(a, b);
-        int mini = Math.min(a, b);
+    protected final long choose(int a, int b){
+        long maxi = Math.max(a, b);
+        long mini = Math.min(a, b);
         return factorial(maxi)/(factorial(mini)*factorial(maxi-mini));
     }
     
     protected final double gamma(double t){
-        /*if(n - (int)n == 0) return factorial((int)n-1);
-        
-        double result = 0; 
-        for(double x = 0; x<10000; x+=0.01){
-            if(n-1<0 && x==0) continue;
-            result += 0.01*Math.pow(x, n-1)*Math.exp(-x);
-            
-        }*/
-        
         // Euler
         double result = 1/t;
         for(int n=1; n<100000; n++){

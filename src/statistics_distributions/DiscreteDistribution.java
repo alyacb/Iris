@@ -39,9 +39,9 @@ public abstract class DiscreteDistribution extends Distribution {
             return 1;
         }
         
-        int result = 0;
+        double result = 0;
         for(int i=0; i<=x; i++){
-            result+=f(x);
+            result+=f(i);
         }
         return result;
     }

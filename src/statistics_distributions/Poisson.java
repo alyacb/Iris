@@ -45,5 +45,4 @@ public class Poisson extends DiscreteDistribution {
         }
         coefficient = Math.exp(-getParameter(0));
     }
-    
 }

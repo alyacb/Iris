@@ -11,7 +11,7 @@ public class Normal extends ContinuousDistribution {
 
     // This implements the Normal distribution
     
-    private double COEFFICIENT;
+    double COEFFICIENT;
     
     public Normal(double mean, double variance) {
         super("Normal", new double[]{mean, variance});
@@ -30,7 +30,7 @@ public class Normal extends ContinuousDistribution {
 
     @Override
     public double f(double x) {
-        return COEFFICIENT*Math.exp(-Math.pow(x-getMean(), 2));
+        return COEFFICIENT*Math.exp(-Math.pow(x-getMean(), 2)/(2*getParameter(1)));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Normal extends ContinuousDistribution {
         if(getParameter(1) <= 0){
             throwBadArgs();
         }
-        COEFFICIENT = Math.exp(-1/(2*getParameter(1)))/Math.sqrt(2*Math.PI*getParameter(1));
+        COEFFICIENT = 1/Math.sqrt(2*Math.PI*getParameter(1));
     }
     
 }
