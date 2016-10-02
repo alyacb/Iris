@@ -1,7 +1,7 @@
 
 package statistics_distributions;
 
-import graphs.MemoryManager;
+import graphs.DistributionManager;
 import statistics_analysis.DataSet;
 
 /**
@@ -10,11 +10,11 @@ import statistics_analysis.DataSet;
  */
 public class GraphDistribution extends Distribution {
 
-    MemoryManager graph_boss;
+    private final DistributionManager graph_boss;
     
     public GraphDistribution() {
         super("Graph Distribution", new double[]{});
-        graph_boss = new MemoryManager();
+        graph_boss = new DistributionManager();
     }
 
     @Override

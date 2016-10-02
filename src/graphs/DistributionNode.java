@@ -8,9 +8,9 @@ import statistics_distributions.Distribution;
  *
  * @author alyacarina
  */
-public class DistibutionNode extends MemoryNode {
+public class DistributionNode extends MemoryNode {
     
-    public DistibutionNode(Distribution d, ArrayList<MemoryNode> neighbors, int id) {
+    public DistributionNode(Distribution d, ArrayList<MemoryNode> neighbors, int id) {
         super(neighbors, id);
     }
     
