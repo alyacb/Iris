@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 public class MemoryManager {
     public MemoryNode root;
-    public int number_of_nodes; // Root is node 0
+    protected int number_of_nodes; // Root is node 0
     
     // Constructor:
     public MemoryManager(){
@@ -201,6 +201,11 @@ public class MemoryManager {
                 }
             }
         }
+    }
+    
+    // Get number of nodes connected to root
+    public int getNumberOfNodes(){
+        return number_of_nodes;
     }
     
     // Method to find a node at a given position

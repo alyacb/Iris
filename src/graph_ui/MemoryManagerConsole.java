@@ -90,7 +90,7 @@ public class MemoryManagerConsole extends Panel {
             case "think":
                 memory.sleep();
                 int l = (int)(Math.random()*20);
-                int i0 = (int)(Math.random()*memory.number_of_nodes);
+                int i0 = (int)(Math.random()*memory.getNumberOfNodes());
                 if(memory instanceof ConceptGraph){
                     ConceptGraph cg = (ConceptGraph)memory;
                     ConceptNode x = (ConceptNode) cg.root.seek(i0, new ArrayList<>());
