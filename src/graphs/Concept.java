@@ -72,7 +72,7 @@ public class Concept extends MemoryManager {
                 MemoryNode check = root.seek(j, new ArrayList<>());
                 if(check==null) continue;
                 if(check.getData().equals(current.getData())){
-                    current.addNeighbors(check.neighbors);
+                    current.addNeighbors(check.getNeighbors());
                     current.feed(check.getNumberOfCalls());
                 }
             }
@@ -91,7 +91,7 @@ public class Concept extends MemoryManager {
             c2.root.setId(merged.getNextId());
             c2.root.mouse_x = 50 + (int)(300*Math.random());
             c2.root.mouse_y = 50 + (int)(300*Math.random());
-            for(MemoryNode mn: c2.root.neighbors){
+            for(MemoryNode mn: c2.root.getNeighbors()){
                 mn.setId(merged.getNextId());
                 mn.mouse_x = 50 + (int)(300*Math.random());
                 mn.mouse_y = 50 + (int)(300*Math.random());
@@ -102,7 +102,7 @@ public class Concept extends MemoryManager {
             c1.root.setId(merged.getNextId());
             c1.root.mouse_x = 50 + (int)(300*Math.random());
             c1.root.mouse_y = 50 + (int)(300*Math.random());
-            for(MemoryNode mn: c1.root.neighbors){
+            for(MemoryNode mn: c1.root.getNeighbors()){
                 mn.setId(merged.getNextId());
                 mn.mouse_x = (int)(300*Math.random());
                 mn.mouse_y = (int)(300*Math.random());
@@ -154,7 +154,7 @@ public class Concept extends MemoryManager {
         String summary = "";
         summary+= current.toSummary();
         to_ignore.add(current.getId());
-        for(MemoryNode node: current.neighbors){
+        for(MemoryNode node: current.getNeighbors()){
             if(to_ignore.contains(node.getId())) continue;
             summary +=  "!" + summarize(node, to_ignore);
         }

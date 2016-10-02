@@ -32,7 +32,7 @@ public class LogicNode extends MemoryNode {
         
         to_ignore.add(getId());
         
-        for(MemoryNode neighbor: neighbors){
+        for(MemoryNode neighbor: getNeighbors()){
             if (!to_ignore.contains(neighbor.getId())){
                 MemoryNode temp = ((LogicNode) neighbor).seekByFormula(sought, to_ignore);
                 if(temp!=null){

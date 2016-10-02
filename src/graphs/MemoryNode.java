@@ -18,9 +18,9 @@ import java.util.Iterator;
 
 public class MemoryNode {
     // Fields:
-    public ArrayList<MemoryNode> neighbors;
+    private ArrayList<MemoryNode> neighbors;
     private int number_of_calls;
-    private int id;
+    int id;
     private Object datum;
     public int mouse_x = 0;
     public int mouse_y = 0;
@@ -134,6 +134,11 @@ public class MemoryNode {
     // Returns number_of_calls:
     public int getNumberOfCalls(){
         return number_of_calls;
+    }
+    
+    // Gets neighbors
+    public ArrayList<MemoryNode> getNeighbors(){
+        return (ArrayList<MemoryNode>) neighbors.clone();
     }
     
     //Increases priority

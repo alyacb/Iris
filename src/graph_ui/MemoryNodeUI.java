@@ -1,7 +1,6 @@
 
 package graph_ui;
 
-import graph_ui.Grapher;
 import graphs.MemoryManager;
 import java.awt.BorderLayout;
 import java.awt.Panel;

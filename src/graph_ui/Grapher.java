@@ -141,7 +141,7 @@ public class Grapher extends Panel {
                                             (int) (255 * Math.random()));
                         }
                         g2d.setColor(memory.edge_color);
-                        for (MemoryNode neighbor : memory.neighbors) {
+                        for (MemoryNode neighbor : memory.getNeighbors()) {
                             if (neighbor.getId() > memory.getId()) {
                                 g2d.drawLine(memory.mouse_x + HALF_NODE_RADIUS,
                                         memory.mouse_y + HALF_NODE_RADIUS,
@@ -150,7 +150,7 @@ public class Grapher extends Panel {
                             }
                         }
 
-                        for (MemoryNode x : memory.neighbors) {
+                        for (MemoryNode x : memory.getNeighbors()) {
                             paintNode(x, to_ignore);
                         }
                     }
@@ -263,7 +263,7 @@ public class Grapher extends Panel {
         remove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tempStore = (ArrayList<MemoryNode>) selected.neighbors.clone();
+                tempStore = (ArrayList<MemoryNode>) selected.getNeighbors().clone();
                 tempStore.add(nemo.removeMemoryNode(selected.getId()));
                 if (tempStore.contains(nemo.root)) {
                     tempStore.remove(nemo.root);

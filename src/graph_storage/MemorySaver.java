@@ -32,7 +32,7 @@ public class MemorySaver {
                       ArrayList<Integer> to_ignore){
         out.println(node.toSummary());
         to_ignore.add(node.getId());
-        for(MemoryNode current: node.neighbors){
+        for(MemoryNode current: node.getNeighbors()){
             if(to_ignore.contains(current.getId())) continue;
             span(current, out, to_ignore);
         }

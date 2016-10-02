@@ -40,7 +40,7 @@ public class ConceptNode extends MemoryNode {
         
         to_ignore.add(this.getId());
         
-        for(MemoryNode neighbor: neighbors){
+        for(MemoryNode neighbor: getNeighbors()){
             if (!to_ignore.contains(neighbor.getId())){
                 if(neighbor instanceof ConceptNode){
                     ConceptNode temp = ((ConceptNode)neighbor).seekByConcept(idea, to_ignore);
@@ -66,9 +66,9 @@ public class ConceptNode extends MemoryNode {
         String summary = "";
         summary += "<" + getId() + "|";
         summary += getConcept().toSummary() + "|<";
-        for(int i = 0; i<neighbors.size(); i++){
-            summary+= neighbors.get(i).getId();
-            if(i<neighbors.size()-1){
+        for(int i = 0; i<getNeighbors().size(); i++){
+            summary+= getNeighbors().get(i).getId();
+            if(i<getNeighbors().size()-1){
                 summary+= ",";
             }
         }

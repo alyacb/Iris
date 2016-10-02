@@ -86,7 +86,7 @@ public class LogicManager extends MemoryManager {
             ln.addNeighbor(n);
         }
         
-        for(MemoryNode mn: ln.neighbors){
+        for(MemoryNode mn: ln.getNeighbors()){
             if(!forbidden.contains(mn.getId())){
                 addLogicNodeByEntailment(n, (LogicNode) mn, forbidden);
             }

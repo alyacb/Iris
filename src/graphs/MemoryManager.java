@@ -13,7 +13,6 @@ public class MemoryManager {
     public MemoryNode root;
     public int number_of_nodes; // Root is node 0
     
-    
     // Constructor:
     public MemoryManager(){
         number_of_nodes = 0;
@@ -170,7 +169,7 @@ public class MemoryManager {
         } else if (node2==null){
             throw new IllegalStateException("No node with id: " + id1 
                     + " is accessible!");
-        } else if(!node1.neighbors.contains(node2)){
+        } else if(!node1.getNeighbors().contains(node2)){
             node1.addNeighbor(node2);
         }
     }
@@ -320,7 +319,7 @@ public class MemoryManager {
         for(int i=0; i<=number_of_nodes; i++){
             try {
                 MemoryNode node = root.seek(i, new ArrayList<>());
-                mergesort(node.neighbors);
+                mergesort(node.getNeighbors());
             } catch(NullPointerException e){
                 System.out.println("HUH: " + i);
                 //clean(null);

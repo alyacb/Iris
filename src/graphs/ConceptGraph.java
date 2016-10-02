@@ -114,8 +114,8 @@ public class ConceptGraph extends MemoryManager {
         }
 
         ArrayList<MemoryNode> future_neighbors = new ArrayList<>();
-        future_neighbors.addAll(m1.neighbors);
-        future_neighbors.addAll(m2.neighbors);
+        future_neighbors.addAll(m1.getNeighbors());
+        future_neighbors.addAll(m2.getNeighbors());
 
         // WARNING: if either is NOT a concept-containing node, 
         //    you WILL get a ClassCastException.
@@ -221,13 +221,13 @@ public class ConceptGraph extends MemoryManager {
     // find associations in graph
     public void associateLite(MemoryNode current, ArrayList<Integer> to_ignore) {
         ArrayList<String> bin = new ArrayList<>();
-        for (int i = 1; i < current.neighbors.size(); i++) {
-            ConceptNode x = (ConceptNode) current.neighbors.get(i);
+        for (int i = 1; i < current.getNeighbors().size(); i++) {
+            ConceptNode x = (ConceptNode) current.getNeighbors().get(i);
             if (to_ignore.contains(x.getId())) {
                 continue;
             }
             for (int j = 0; j < i; j++) {
-                ConceptNode y = (ConceptNode) current.neighbors.get(j);
+                ConceptNode y = (ConceptNode) current.getNeighbors().get(j);
                 if (y.compareNeighbors(x) && x.compareNeighbors(y)) {
                     String sx = x.getConcept().toString();
                     if (!bin.contains(sx)) {
@@ -252,13 +252,13 @@ public class ConceptGraph extends MemoryManager {
             ArrayList<Integer> to_ignore) {
         ArrayList<ArrayList<ConceptNode>> bins = new ArrayList<>();
         ArrayList<ConceptNode> bin = new ArrayList<>();
-        for (int i = 1; i < current.neighbors.size(); i++) {
-            ConceptNode x = (ConceptNode) current.neighbors.get(i);
+        for (int i = 1; i < current.getNeighbors().size(); i++) {
+            ConceptNode x = (ConceptNode) current.getNeighbors().get(i);
             if (to_ignore.contains(x.getId())) {
                 continue;
             }
             for (int j = 0; j < i; j++) {
-                ConceptNode y = (ConceptNode) current.neighbors.get(j);
+                ConceptNode y = (ConceptNode) current.getNeighbors().get(j);
                 if (y.compareNeighbors(x) && x.compareNeighbors(y)) {
                     if (!bin.contains(x)) {
                         bin.add(x);
@@ -312,7 +312,7 @@ public class ConceptGraph extends MemoryManager {
                 boolean esc;
                 for (ArrayList<MemoryNode> part : bins) {
                     esc = true;
-                    for (MemoryNode cn : current.neighbors) {
+                    for (MemoryNode cn : current.getNeighbors()) {
                         if (part.contains(cn)) {
                             esc = false;
                             break;
@@ -338,14 +338,14 @@ public class ConceptGraph extends MemoryManager {
                 bins.add(temp);
             }
 
-            for (MemoryNode mn : current.neighbors) {
+            for (MemoryNode mn : current.getNeighbors()) {
                 partition(mn, to_ignore, bins);
             }
         }
     }
 
     private boolean unneighborly(MemoryNode mn, ArrayList<MemoryNode> x) {
-        for (MemoryNode neighbor : mn.neighbors) {
+        for (MemoryNode neighbor : mn.getNeighbors()) {
             if (x.contains(neighbor)) {
                 return false;
             }

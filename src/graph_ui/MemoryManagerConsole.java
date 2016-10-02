@@ -99,18 +99,18 @@ public class MemoryManagerConsole extends Panel {
                     for(int i=0; i<l; i++){
                         String summand = (String)x.getConcept().root.getData();
                         if(repetitions.contains(summand)){
-                            x = (ConceptNode)x.neighbors.get(
-                                    (int)(Math.random()*x.neighbors.size()));
+                            x = (ConceptNode)x.getNeighbors().get(
+                                    (int)(Math.random()*x.getNeighbors().size()));
                             summand = (String)x.getConcept().root.getData();
                         }
                         response+= " " + summand;
                         int j;
-                        for(j=0; j<x.neighbors.size()-1; j++){
+                        for(j=0; j<x.getNeighbors().size()-1; j++){
                             if(Math.random()>0.8){
                                 break;
                             }
                         }
-                        x = (ConceptNode)x.neighbors.get(j);
+                        x = (ConceptNode)x.getNeighbors().get(j);
                         repetitions.add(summand);
                     }
                     return response;
@@ -166,7 +166,7 @@ public class MemoryManagerConsole extends Panel {
                         if (i == 0) {
                             memory.removeAllMemoryNodes();
                         } else {
-                            tempList = memory.root.seek(i, new ArrayList<>()).neighbors;
+                            tempList = memory.root.seek(i, new ArrayList<>()).getNeighbors();
                             temp = memory.removeMemoryNode(i);
                         }
                     } catch (Exception e) {
