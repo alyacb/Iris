@@ -38,7 +38,7 @@ public class MemoryManager {
             int parent_index = (int)(Math.random()*(i/2)+i/2);
             temp.mouse_x = 50+(int)(1200*Math.random());
             temp.mouse_y = 50+(int)(500*Math.random());
-            addMemoryNode(temp, parent_index);
+            addMemoryNode(temp, parent_index); 
         }
         
         
@@ -224,6 +224,11 @@ public class MemoryManager {
             sought = null;
         }
         return sought;
+    }
+    
+    // Get total frequency
+    public int getTotalFrequency(){
+        return root.getNeighborFrequencySum(new ArrayList<>());
     }
     
     // (Visual) Node-ordering Methods:

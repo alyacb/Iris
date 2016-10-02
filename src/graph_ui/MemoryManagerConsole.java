@@ -1,6 +1,5 @@
 package graph_ui;
 
-import graph_ui.Grapher;
 import graph_storage.MemorySaver;
 import graphs.ConceptGraph;
 import graphs.ConceptNode;
@@ -241,6 +240,8 @@ public class MemoryManagerConsole extends Panel {
                         e.printStackTrace();
                         return "Unknown Command: " + command;
                     }
+                } else if(command.contains("count")) {
+                    return "Total frequency is: "+memory.getTotalFrequency();
                 } else {
                     if(command.contains("random")){
                         command = command.substring(0, command.indexOf("random"))

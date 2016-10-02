@@ -138,7 +138,7 @@ public class MemoryNode {
     
     // Gets neighbors
     public ArrayList<MemoryNode> getNeighbors(){
-        return (ArrayList<MemoryNode>) neighbors.clone();
+        return (ArrayList<MemoryNode>)neighbors.clone();
     }
     
     //Increases priority
@@ -263,6 +263,17 @@ public class MemoryNode {
         
         // Not found
         return null;
+    }
+
+    // get total frequency of all connected nodes
+    public int getNeighborFrequencySum(ArrayList<Integer> visited) {
+        int count = number_of_calls;
+        visited.add(id);
+        for(MemoryNode mn: neighbors){
+            if(visited.contains(mn.id)) continue;
+            count+=mn.getNeighborFrequencySum(visited);
+        }
+        return count;
     }
     
 }
