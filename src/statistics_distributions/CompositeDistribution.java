@@ -155,6 +155,7 @@ public class CompositeDistribution extends Distribution {
         }
     }
     
+    /* testing
     public static void main(String[] args){
         CompositeDistribution cd = new CompositeDistribution(
                 new double[][]{{-1,0},{0.3,1}}, new Distribution[]{
@@ -169,6 +170,6 @@ public class CompositeDistribution extends Distribution {
         lookAtMe.add("Center", m);
         lookAtMe.setExtendedState(JFrame.MAXIMIZED_BOTH);
         lookAtMe.setVisible(true);
-    }
+    }*/
     
 }

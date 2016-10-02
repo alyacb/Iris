@@ -35,6 +35,14 @@ public class BoringDistribution extends Distribution {
         }
         return 0;
     }
+    
+    @Override
+    public double F(double x){
+        if(x<getParameter(0)){
+            return 0;
+        }
+        return 1;
+    }
 
     @Override
     protected double est_param_impl(int i, DataSet data) {
