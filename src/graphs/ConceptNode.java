@@ -18,13 +18,6 @@ public class ConceptNode extends MemoryNode {
         this.setData(idea);
     }
     
-    @Override
-    public void setData(Object datum){
-        if (!(datum instanceof Concept))
-            throw new IllegalStateException("ConceptNodes must be equipped with a Concept!");
-        super.setData(datum);
-    }
-    
     public Concept getConcept(){
         if(this.getData()==null) return null;
         return (Concept)this.getData();

@@ -21,7 +21,7 @@ public class MemoryNode {
     private ArrayList<MemoryNode> neighbors;
     private int number_of_calls;
     int id;
-    private Object datum;
+    protected Object datum;
     public int mouse_x = 0;
     public int mouse_y = 0;
     public Color edge_color = null;
@@ -45,7 +45,7 @@ public class MemoryNode {
         this.datum = toClone.getData();
     }
     
-    public MemoryNode cloneWithNewId(int new_id){
+    public final MemoryNode cloneWithNewId(int new_id){
         MemoryNode mn = new MemoryNode(this);
         mn.id = new_id;
         return mn;
@@ -54,7 +54,7 @@ public class MemoryNode {
     //Methods:
     
     // Method to find a neighbor with a given id:
-    public MemoryNode getNodeById(int neighbor_id){
+    public final MemoryNode getNodeById(int neighbor_id){
         number_of_calls++;
         for(MemoryNode neighbor: neighbors){
             if(neighbor.getId()==neighbor_id){
@@ -66,7 +66,7 @@ public class MemoryNode {
     
     // Methods to remove neighbors:
     // Method to dissociate node from all neighbors
-    public void detatchFromNeighbors(){
+    public final void detatchFromNeighbors(){
         for(MemoryNode neighbor: neighbors){
             neighbor.detatchNeighbor(id);
         }
@@ -75,7 +75,7 @@ public class MemoryNode {
     }
     
     // Method to dissociate a given neighbor from neighbors
-    public void detatchNeighbor(int neighbor_id){
+    public final void detatchNeighbor(int neighbor_id){
         for(MemoryNode neighbor: neighbors){
             if(neighbor.getId()==neighbor_id){
                 neighbors.remove(neighbor);
@@ -88,7 +88,7 @@ public class MemoryNode {
     // Methods to add neighbors and brothers:
     
     // Add double neighbor
-    public void addNeighbor(MemoryNode neighbor){
+    public final void addNeighbor(MemoryNode neighbor){
         if(getNodeById(neighbor.getId())!=null){
             return;
         } else {
@@ -98,7 +98,7 @@ public class MemoryNode {
     }
     
     // Add many double neighbors
-    public void addNeighbors(ArrayList<MemoryNode> neighbors){
+    public final void addNeighbors(ArrayList<MemoryNode> neighbors){
         Iterator it = neighbors.iterator();
         while(it.hasNext()){
             MemoryNode next = (MemoryNode) it.next();
@@ -116,7 +116,7 @@ public class MemoryNode {
     
     // Method to add a single one-way neighbor:
     // NOTE: this will result in a dead end in the graph
-    public void addPrisoner(MemoryNode neighbor){
+    public final void addPrisoner(MemoryNode neighbor){
         for(MemoryNode node: neighbors){
             if(node.getId()==neighbor.id){
                 return;
@@ -132,37 +132,37 @@ public class MemoryNode {
     
     //Information access methods:
     // Returns number_of_calls:
-    public int getNumberOfCalls(){
+    public final int getNumberOfCalls(){
         return number_of_calls;
     }
     
     // Gets neighbors
-    public ArrayList<MemoryNode> getNeighbors(){
+    public final ArrayList<MemoryNode> getNeighbors(){
         return (ArrayList<MemoryNode>)neighbors.clone();
     }
     
     //Increases priority
-    public void feed(){
+    public final void feed(){
         number_of_calls++;
     }
     
-    public void feed(int times){
+    public final void feed(int times){
         number_of_calls += times;
     }
     
     // Returns id:
-    public int getId(){
+    public final int getId(){
         return id;
     }
     
     // Sets new id: use sparingly.
-    public void setId(int id){
+    public final void setId(int id){
         this.id = id;
     }
     
     // Returns node with given id:
     // Depth-first search
-    public MemoryNode seek(int destination_id, ArrayList<Integer> to_ignore) {
+    public final MemoryNode seek(int destination_id, ArrayList<Integer> to_ignore) {
         if(destination_id == id){
             number_of_calls++;
             return this;
@@ -183,7 +183,7 @@ public class MemoryNode {
         return null;
     }
     
-    public boolean compareNeighbors(MemoryNode mn){
+    public final boolean compareNeighbors(MemoryNode mn){
         for(MemoryNode n: neighbors){
             if(!mn.neighbors.contains(n)){
                    return false; 
@@ -192,11 +192,11 @@ public class MemoryNode {
         return true;
     }
     
-    public void setData(Object datum){
+    public final void setData(Object datum){
         this.datum = datum;
     }
     
-    public Object getData(){
+    public final Object getData(){
         return datum;
     }
     
@@ -233,7 +233,7 @@ public class MemoryNode {
         return summary;
     }
     
-    MemoryNode seekByObject(Object datum, ArrayList<Integer> to_ignore) {
+    public MemoryNode seekByObject(Object datum, ArrayList<Integer> to_ignore) {
         if(this.datum!=null){
             if(this.datum instanceof Concept){
                 Concept c = (Concept)this.datum;
@@ -266,7 +266,7 @@ public class MemoryNode {
     }
 
     // get total frequency of all connected nodes
-    public int getNeighborFrequencySum(ArrayList<Integer> visited) {
+    public final int getNeighborFrequencySum(ArrayList<Integer> visited) {
         int count = number_of_calls;
         visited.add(id);
         for(MemoryNode mn: neighbors){
