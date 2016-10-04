@@ -1,10 +1,7 @@
 
 package statistics_distributions;
 
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
 import statistics_analysis.DataSet;
-import statistics_ui.DistributionGrapher;
 
 /**
  *
