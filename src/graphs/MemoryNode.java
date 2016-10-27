@@ -116,7 +116,7 @@ public class MemoryNode {
     
     // Method to add a single one-way neighbor:
     // NOTE: this will result in a dead end in the graph
-    public final void addPrisoner(MemoryNode neighbor){
+    public final void addPrisoner(MemoryNode neighbor) {
         for(MemoryNode node: neighbors){
             if(node.getId()==neighbor.id){
                 return;

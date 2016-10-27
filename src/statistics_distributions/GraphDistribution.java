@@ -5,55 +5,88 @@ import graphs.DistributionManager;
 import graphs.DistributionNode;
 import graphs.MemoryNode;
 import java.util.ArrayList;
-import java.util.Iterator;
 import statistics_analysis.DataSet;
 import statistics_analysis.PValueGenerator;
-import statistics_analysis.DistributionGenerator;
 
 /**
  *
  * @author alyacarina
  */
+
+/** <!-- NOTE TO DEV -->
+ * Need to implement correctional features.
+ *  A) Iris needs to be able to adjust her base graph when she is wrong.
+ * i.e. LEARN from mistakes. Figure out a system to allow such changes,
+ * that is not purely statistical in nature. 
+ * <!-- IDEA --> input expected vs. input produced-
+ * Iris can look at what she knows (or doesn't) to figure out if she should have taken a different path
+ * to the response, or if she just needs to add this response to the end of this path (train of thought).
+ *  B) Graphs need to reshuffle on sleep to be rooted at the most popular
+ * node, or rather the node linked to the most 'popular' nodes- the most 
+ * interconnected node, for faster traversal. Typically one & same.
+**/
+
 public class GraphDistribution extends Distribution {
 
-    private DistributionManager graph;
+    private final DistributionManager graph;
     private final static String BAD_METHOD = "Not computable.";
-    private ArrayList<Distribution> track;
+    private int total_frequency;
+    private DistributionNode current_scope; // node of graph we're analyzing from
+    private double track;
     
     public GraphDistribution() {
         super("Graph Distribution", new double[]{});
         graph = new DistributionManager();
-        track = new ArrayList();
+        current_scope = null;
+        total_frequency = graph.getTotalFrequency();
+        track = -1;
         validate();
     }
 
-    // Original Methods
+    // Methods
     
-    // Reset tracker
+    // Reset tracker, for when a brand new, unrelated search needs to be made
     public void clearTrack(){
-        track = new ArrayList();
+        current_scope = (DistributionNode)graph.root;
+        track = -1;
     }
     
+    // Search for first node in graph with a high-enough p-value to not reject hypothesis
+    private void seekFirst(DistributionNode node, 
+            ArrayList<Integer> visited) {
+        PValueGenerator nuisance = new PValueGenerator((DataSet)node.getData());
+        visited.add(node.getId());
+        double pv = nuisance.getPValue(node.getDistribution(), node.getPreferredBinSize())
+                * node.getNumberOfCalls()/total_frequency;
+        if(track*pv>0.05){
+            track*=pv;
+            current_scope = node;
+            return;
+        }
+        for(MemoryNode d: node.getNeighbors()){
+            if(visited.contains(d.getId())) continue;
+            seekFirst((DistributionNode) d, visited);
+        }
+        current_scope = null; // nothing was found
+    }
+    
+    //Look for closest appropriate distribution in the current scope
     private DistributionNode huntForDistribution(double x){
-        if(track.isEmpty()){
-            // search for first node with a high-enough p-value to not reject hypothesis
-        } else {
-            // search among neighbors of latest node for best distribution
-            Iterator i = track.iterator();
-            while(i.hasNext()){
-                DistributionNode link = (DistributionNode)i.next();
-                Distribution d = link.getDistribution();
-                DataSet ds = (DataSet) link.getData();
-                ds.addDatum(x);
-                PValueGenerator pvg = new PValueGenerator(ds);
-                if(pvg.getPValue(d, 0) > 0.1){ // distribution hypothesis not rejected
-                    link.addConfirmedDatum(x);
-                    return link;
-                }
-            }
+        DistributionNode previous_scope = current_scope;
+        if(track == -1){
+            track = 1; // start tracking
+            current_scope = (DistributionNode)graph.root;
+        } 
+        
+        // link it to previous, if necessary
+        //   note that checking for existing neighbors 
+        //   with the same ID is done in the memorynode class
+        if(previous_scope != null && current_scope != null){
+            current_scope.addNeighbor(previous_scope);
         }
         
-        return null;
+        seekFirst(current_scope, new ArrayList());
+        return current_scope;
     }
     
     // Overrides
@@ -73,15 +106,9 @@ public class GraphDistribution extends Distribution {
     @Override
     public double f(double x) {
         DistributionNode target = huntForDistribution(x);
-        if(target == null) return 0;
-        track.add(target.getDistribution());
-        double fx = 1;
+        if(target == null) return 0; // the existing graph has no facilities
         
-        for(Distribution d: track){
-            fx*=d.f(x);
-        }
-        
-        return fx;
+        return track;
     }
 
     @Override
@@ -100,8 +127,7 @@ public class GraphDistribution extends Distribution {
         visited.add(current.getId());
         
         if(current.shouldUpdate()) {
-            DistributionGenerator dg = new DistributionGenerator((DataSet)current.getData());
-            current.setDistribution(dg.generateBestDistribution());
+            current.update(graph);
         }
         
         for(MemoryNode neighbor: current.getNeighbors()){
@@ -115,9 +141,8 @@ public class GraphDistribution extends Distribution {
     // Sends Iris to sleep- reorganizes data, reevaluates distributions
     public void goodNight(){
         goodNight((DistributionNode) graph.root, new ArrayList());
-        
+        total_frequency = graph.getTotalFrequency();
         graph.sleep();
-        
     }
     
 }
