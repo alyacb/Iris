@@ -279,4 +279,19 @@ public class DataSet {
             ex.printStackTrace();
         }
     }*/
+
+    public double getRange() {
+        return getMax() - getMin();
+    }
+
+    public double getMinGap() {
+        double min = getRange();
+        for(int i=1; i<data.size(); i++){
+            double diff = data.get(i).getContent() - data.get(i-1).getContent();
+            if(diff<min){
+                min = diff;
+            }
+        }
+        return min;
+    }
 }

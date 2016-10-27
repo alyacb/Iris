@@ -40,7 +40,16 @@ public class DistributionNode extends MemoryNode {
     // TBI 
     // Essential for correct node evaluations
     public void recalculateBestBinSize(){
-        throw new UnsupportedOperationException("Blame the lazy dev.");
+        DataSet d = (DataSet)datum;
+        double r = d.getRange();
+        double db = d.getMinGap();
+        if(db == 0){
+            suggested_bin_size = db;
+            return;
+        }
+        for(double b = 0; b<r; b+=0.001){
+            
+        }
     }
     
     public double getPreferredBinSize(){
