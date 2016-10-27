@@ -33,6 +33,7 @@ public class GraphDistribution extends Distribution {
     private int total_frequency;
     private DistributionNode current_scope; // node of graph we're analyzing from
     private double track;
+    private double last_datum;
     
     public GraphDistribution() {
         super("Graph Distribution", new double[]{});
@@ -59,6 +60,7 @@ public class GraphDistribution extends Distribution {
         double pv = nuisance.getPValue(node.getDistribution(), node.getPreferredBinSize())
                 * node.getNumberOfCalls()/total_frequency;
         if(track*pv>0.05){
+            node.addConfirmedDatum(last_datum);
             track*=pv;
             current_scope = node;
             return;
@@ -84,6 +86,8 @@ public class GraphDistribution extends Distribution {
         if(previous_scope != null && current_scope != null){
             current_scope.addNeighbor(previous_scope);
         }
+        
+        last_datum = x;
         
         seekFirst(current_scope, new ArrayList());
         return current_scope;
@@ -143,6 +147,10 @@ public class GraphDistribution extends Distribution {
         goodNight((DistributionNode) graph.root, new ArrayList());
         total_frequency = graph.getTotalFrequency();
         graph.sleep();
+    }
+    
+    public DistributionManager getGraph(){
+        return graph;
     }
     
 }

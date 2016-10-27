@@ -23,7 +23,7 @@ import javax.swing.JLabel;
  */
 public class Grapher extends Panel {
 
-    public final MemoryManager nemo;
+    public MemoryManager nemo;
     public final static int NODE_RADIUS = 15;
     private final static int HALF_NODE_RADIUS = NODE_RADIUS / 2;
     private final String TITLE;
@@ -77,6 +77,11 @@ public class Grapher extends Panel {
         initialize2();
     }
 
+    public void setManager(MemoryManager next_boss){
+       nemo = next_boss;
+       refresh();
+    }
+    
     private void initialize() {
         this.setLayout(new BorderLayout());
         nodeInfo = initializeNodeInfoPanel();
@@ -225,21 +230,33 @@ public class Grapher extends Panel {
         this.add("Center", face);
     }
 
-    // Overrideable methods
-    public void addNode(int mouse_x, int mouse_y) {
+    private void addNodeImpl(int mouse_x, int mouse_y) {
         MemoryNode node = getNewMemoryNode();
         nemo.addMemoryNode(node, selected.getId());
         node.mouse_x = mouse_x;
         node.mouse_y = mouse_y;
     }
+    
+    public void knitNodeImpl(MemoryNode temp) {
+        nemo.knit(selected.getId(), temp.getId());
+    }
+    
+    public void moveNodeImpl(int mouse_x, int mouse_y) {
+        selected.mouse_x = mouse_x;
+        selected.mouse_y = mouse_y;
+    }
+    
+    // Overrideable methods
+    public void addNode(int mouse_x, int mouse_y) {
+        addNodeImpl(mouse_x, mouse_y);
+    }
 
     public void knitNodes(MemoryNode temp) {
-        nemo.knit(selected.getId(), temp.getId());
+        knitNodeImpl(temp);
     }
 
     public void moveNode(int mouse_x, int mouse_y) {
-        selected.mouse_x = mouse_x;
-        selected.mouse_y = mouse_y;
+        moveNodeImpl(mouse_x, mouse_y);
     }
 
     public void overrideableAction() {
