@@ -76,4 +76,5 @@ public class DistributionNode extends MemoryNode {
         }
         recalculateBestBinSize();
     }
+    
 }

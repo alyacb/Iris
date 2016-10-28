@@ -2,6 +2,7 @@
 package graphs;
 
 import java.util.ArrayList;
+import statistics_analysis.DataSet;
 import statistics_distributions.Distribution;
 
 /**
@@ -19,6 +20,9 @@ public class DistributionManager extends MemoryManager {
     public DistributionManager(){
         super();
         root = new DistributionNode(null, new ArrayList<>(), 0);
+        root.mouse_x = 200;
+        root.mouse_y = 100;
+        root.setData(new DataSet());
     }
     
     // DEPRECATED
@@ -44,7 +48,10 @@ public class DistributionManager extends MemoryManager {
     }
     
     public void addDistributionNode(Distribution d, int destination_id){
-        addMemoryNode(new DistributionNode(d, new ArrayList<>(), getNextId()), destination_id);
+        DistributionNode temp = new DistributionNode(d, new ArrayList<>(), getNextId());
+        temp.mouse_x = (int) (Math.random()*1000);
+        temp.mouse_y = (int) (Math.random()*600);
+        addMemoryNode(temp, destination_id);
     }
     
     public void addDistributionNode(Distribution d){

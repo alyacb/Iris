@@ -1,7 +1,7 @@
 
 package ide;
 
-import graphs.DistributionManager;
+import core.Iris;
 import java.awt.BorderLayout;
 import java.awt.Panel;
 import java.awt.TextArea;
@@ -16,13 +16,13 @@ import ui_general_utils.EnterKeyListener;
 public class Inputter extends Panel {
     
     private GraphLeveller view;
-    private DistributionManager boss;
+    private Iris brains;
     private TextArea console;
     
     public Inputter(){
         super();
-        boss = new DistributionManager();
-        view = new GraphLeveller(boss);
+        brains = new Iris();
+        view = new GraphLeveller(brains.getMemory().getGraph());
         initialize();
     }
     
@@ -33,6 +33,7 @@ public class Inputter extends Panel {
         console.addKeyListener(new EnterKeyListener() {
             @Override
             public void doThis(KeyEvent e) {
+                brains.input(console.getText());
                 view.refresh();
                 console.setText("");
             }

@@ -5,6 +5,7 @@ import graph_ui.Grapher;
 import graphs.DistributionManager;
 import graphs.DistributionNode;
 import graphs.MemoryNode;
+import java.awt.BorderLayout;
 import java.awt.Panel;
 import java.util.ArrayList;
 import statistics_distributions.GraphDistribution;
@@ -27,8 +28,10 @@ public class GraphLeveller extends Panel {
     private final Grapher graph_plane;
     
     public GraphLeveller(DistributionManager source){
+        setLayout(new BorderLayout());
         this.source = source;
         current_tier = (DistributionNode)source.root;
+        path = new ArrayList<>();
         graph_plane = new Grapher(source) 
         {
             @Override
@@ -58,6 +61,7 @@ public class GraphLeveller extends Panel {
                 }
             }
         };
+        add(graph_plane);
     }
     
     public void refresh(){

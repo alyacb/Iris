@@ -130,14 +130,15 @@ public class Grapher extends Panel {
 
                         g2d.setColor(Color.LIGHT_GRAY);
 
-                        if (memory.getData() != null) {
+                        /*if (memory.getData() != null) {
                             g2d.drawString(memory.getId() + ": "
                                     + memory.getData().toString(),
                                     memory.mouse_x, memory.mouse_y);
-                        } else {
-                            g2d.drawString(memory.getId() + "",
-                                    memory.mouse_x, memory.mouse_y);
-                        }
+                        } else {*/
+                        g2d.drawString(memory.getId() + "",
+                                       memory.mouse_x, 
+                                       memory.mouse_y);
+                        //}
 
                         if (memory.edge_color == null) {
                             memory.edge_color
@@ -152,11 +153,8 @@ public class Grapher extends Panel {
                                         memory.mouse_y + HALF_NODE_RADIUS,
                                         neighbor.mouse_x + HALF_NODE_RADIUS,
                                         neighbor.mouse_y + HALF_NODE_RADIUS);
+                                paintNode(neighbor, to_ignore);
                             }
-                        }
-
-                        for (MemoryNode x : memory.getNeighbors()) {
-                            paintNode(x, to_ignore);
                         }
                     }
 

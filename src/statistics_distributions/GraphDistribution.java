@@ -57,13 +57,15 @@ public class GraphDistribution extends Distribution {
             ArrayList<Integer> visited) {
         PValueGenerator nuisance = new PValueGenerator((DataSet)node.getData());
         visited.add(node.getId());
-        double pv = nuisance.getPValue(node.getDistribution(), node.getPreferredBinSize())
-                * node.getNumberOfCalls()/total_frequency;
-        if(track*pv>0.05){
-            node.addConfirmedDatum(last_datum);
-            track*=pv;
-            current_scope = node;
-            return;
+        if(node.getDistribution() != null){
+            double pv = nuisance.getPValue(node.getDistribution(), node.getPreferredBinSize())
+                    * node.getNumberOfCalls()/total_frequency;
+            if(track*pv>0.05){
+                node.addConfirmedDatum(last_datum);
+                track*=pv;
+                current_scope = node;
+                return;
+            }
         }
         for(MemoryNode d: node.getNeighbors()){
             if(visited.contains(d.getId())) continue;
@@ -89,7 +91,9 @@ public class GraphDistribution extends Distribution {
         
         last_datum = x;
         
-        seekFirst(current_scope, new ArrayList());
+        if(current_scope != null) {
+            seekFirst(current_scope, new ArrayList());
+        }
         return current_scope;
     }
     

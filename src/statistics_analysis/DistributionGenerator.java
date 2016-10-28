@@ -5,6 +5,7 @@ import graphs.DistributionManager;
 import graphs.DistributionNode;
 import graphs.MemoryNode;
 import java.util.ArrayList;
+import statistics_distributions.BoringDistribution;
 import statistics_distributions.Distribution;
 
 /**
@@ -24,6 +25,10 @@ public class DistributionGenerator {
     public DistributionGenerator(DataSet dataSet, DistributionManager boss) {
         this.boss = boss;
         engine = new PValueGenerator(dataSet);
+    }
+    
+    public static Distribution generateBestDistribution(double lonely){
+        return new BoringDistribution(lonely);
     }
     
     private void generateBestDistribution(DistributionNode node, 
