@@ -1,6 +1,7 @@
 
 package statistics_distributions;
 
+import java.io.Serializable;
 import statistics_analysis.DataSet;
 
 /**
@@ -8,7 +9,7 @@ import statistics_analysis.DataSet;
  * @author alyacarina
  */
 
-public abstract class Distribution {
+public abstract class Distribution implements Serializable {
     
     // Abstract superclass managing statistical distributions.
     //    Each concrete subclass has a unique implementation of CDF, PDF
@@ -54,7 +55,9 @@ public abstract class Distribution {
         for(int n=0; n<parameters.length-1; n++){
             s+=parameters[n]+", ";
         }
-        s+=parameters[parameters.length-1];
+        if(parameters.length>0){
+            s+=parameters[parameters.length-1];
+        }
         s+=')';
         return s;
     }

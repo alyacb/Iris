@@ -1,11 +1,13 @@
 
 package statistics_analysis;
 
+import java.io.Serializable;
+
 /**
  *
  * @author alyacarina
  */
-public class Datum {
+public class Datum implements Serializable {
     private final double value;
     public int frequency;
     

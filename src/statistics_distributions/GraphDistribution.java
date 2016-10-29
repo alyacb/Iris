@@ -82,6 +82,12 @@ public class GraphDistribution extends Distribution {
             current_scope = (DistributionNode)graph.root;
         } 
         
+        last_datum = x;
+        
+        if(current_scope != null) {
+            seekFirst(current_scope, new ArrayList());
+        }
+        
         // link it to previous, if necessary
         //   note that checking for existing neighbors 
         //   with the same ID is done in the memorynode class
@@ -89,11 +95,6 @@ public class GraphDistribution extends Distribution {
             current_scope.addNeighbor(previous_scope);
         }
         
-        last_datum = x;
-        
-        if(current_scope != null) {
-            seekFirst(current_scope, new ArrayList());
-        }
         return current_scope;
     }
     
@@ -114,7 +115,7 @@ public class GraphDistribution extends Distribution {
     @Override
     public double f(double x) {
         DistributionNode target = huntForDistribution(x);
-        if(target == null) return 0; // the existing graph has no facilities
+        if(target == graph.root) return 0; // the existing graph has no facilities
         
         return track;
     }
@@ -155,6 +156,10 @@ public class GraphDistribution extends Distribution {
     
     public DistributionManager getGraph(){
         return graph;
+    }
+
+    public void addDistributionNode(Distribution distant) {
+        graph.addDistributionNode(distant);
     }
 
 }

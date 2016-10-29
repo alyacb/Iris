@@ -22,7 +22,7 @@ import statistics_distributions.GraphDistribution;
 
 public class GraphLeveller extends Panel {
     
-    private final DistributionManager source; // Graph source
+    private DistributionManager source; // Graph source
     private ArrayList<DistributionManager> path;
     private DistributionManager current_tier; // Graph root node currently being looked at
     private final Grapher graph_plane;
@@ -75,6 +75,14 @@ public class GraphLeveller extends Panel {
             graph_plane.setManager(current_tier);
         }
         graph_plane.refresh();
+    }
+    
+    public void setSource(DistributionManager source){
+        this.source = source;
+        current_tier = source;
+        path = new ArrayList<>();
+        graph_plane.setManager(source);
+        refresh();
     }
     
 }

@@ -2,6 +2,7 @@
 package graphs;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -16,7 +17,7 @@ import java.util.Iterator;
     2. Each id MUST BE UNIQUE. Designated chronologically, by MemoryManager
 */
 
-public class MemoryNode {
+public class MemoryNode implements Serializable {
     // Fields:
     private ArrayList<MemoryNode> neighbors;
     private int number_of_calls;

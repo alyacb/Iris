@@ -1,5 +1,6 @@
 package statistics_analysis;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * @author alyacarina
  */
 
-public class DataSet {
+public class DataSet implements Serializable {
 
     private ArrayList<Datum> data;
     private ArrayList<Double> mode;

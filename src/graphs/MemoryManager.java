@@ -2,6 +2,7 @@
 package graphs;
 
 import graph_ui.Grapher;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,7 +10,7 @@ import java.util.Iterator;
  *
  * @author alyacarina
  */
-public class MemoryManager {
+public class MemoryManager implements Serializable {
     public MemoryNode root;
     protected int number_of_nodes; // Root is node 0
     
