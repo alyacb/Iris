@@ -23,14 +23,14 @@ import statistics_distributions.GraphDistribution;
 public class GraphLeveller extends Panel {
     
     private final DistributionManager source; // Graph source
-    private ArrayList<DistributionNode> path;
-    private DistributionNode current_tier; // Graph root node currently being looked at
+    private ArrayList<DistributionManager> path;
+    private DistributionManager current_tier; // Graph root node currently being looked at
     private final Grapher graph_plane;
     
     public GraphLeveller(DistributionManager source){
         setLayout(new BorderLayout());
         this.source = source;
-        current_tier = (DistributionNode)source.root;
+        current_tier = source;
         path = new ArrayList<>();
         graph_plane = new Grapher(source) 
         {
@@ -47,14 +47,16 @@ public class GraphLeveller extends Panel {
             @Override
             public void overrideableAction(){
                 // Attempt to descend to lower tier of graph
-                if(current_tier.getId()!=getSelected().getId()
-                   && getSelected() instanceof DistributionNode
+                if(getSelected() instanceof DistributionNode
                    && ((DistributionNode)getSelected()).getDistribution() instanceof GraphDistribution){
+                    //System.out.println("Descending: " + getSelected().getId());
                     path.add(current_tier);
-                    current_tier = (DistributionNode)source.root;
+                    current_tier = ((GraphDistribution)((DistributionNode)getSelected())
+                            .getDistribution()).getGraph();
                     syncTierScope();
-                } else if(current_tier.getId() == getSelected().getId() && path.size()>0){ 
+                } else if(getSelected().getId()==0 && path.size()>0){ //if root, rise up if possible
                     // rise through tiers
+                    //System.out.println("Ascending: " + getSelected().getId());
                     current_tier = path.get(path.size()-1);
                     path.remove(current_tier);
                     syncTierScope();
@@ -69,8 +71,9 @@ public class GraphLeveller extends Panel {
     }
     
     private void syncTierScope(){
-        GraphDistribution graphd = (GraphDistribution)current_tier.getDistribution();
-        graph_plane.setManager(graphd.getGraph());
+        if(current_tier!=null){
+            graph_plane.setManager(current_tier);
+        }
         graph_plane.refresh();
     }
     

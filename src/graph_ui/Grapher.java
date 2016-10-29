@@ -1,5 +1,6 @@
 package graph_ui;
 
+import graphs.DistributionNode;
 import graphs.MemoryManager;
 import graphs.MemoryNode;
 import java.awt.BorderLayout;
@@ -16,6 +17,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import statistics_distributions.GraphDistribution;
 
 /**
  *
@@ -135,7 +137,14 @@ public class Grapher extends Panel {
                                     + memory.getData().toString(),
                                     memory.mouse_x, memory.mouse_y);
                         } else {*/
-                        g2d.drawString(memory.getId() + "",
+                        String type = "";
+                        if(memory instanceof DistributionNode
+                                && ((DistributionNode)memory).getDistribution() instanceof GraphDistribution){
+                            type = "(G)";
+                        } else if(memory.getId() == 0){
+                            type = "(R)";
+                        }
+                        g2d.drawString(memory.getId() + type,
                                        memory.mouse_x, 
                                        memory.mouse_y);
                         //}

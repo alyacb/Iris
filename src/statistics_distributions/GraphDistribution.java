@@ -38,7 +38,7 @@ public class GraphDistribution extends Distribution {
     public GraphDistribution() {
         super("Graph Distribution", new double[]{});
         graph = new DistributionManager();
-        current_scope = null;
+        current_scope = (DistributionNode) graph.root;
         total_frequency = graph.getTotalFrequency();
         track = -1;
         validate();
@@ -71,7 +71,7 @@ public class GraphDistribution extends Distribution {
             if(visited.contains(d.getId())) continue;
             seekFirst((DistributionNode) d, visited);
         }
-        current_scope = null; // nothing was found
+        current_scope = (DistributionNode) graph.root; // nothing was found
     }
     
     //Look for closest appropriate distribution in the current scope
@@ -85,7 +85,7 @@ public class GraphDistribution extends Distribution {
         // link it to previous, if necessary
         //   note that checking for existing neighbors 
         //   with the same ID is done in the memorynode class
-        if(previous_scope != null && current_scope != null){
+        if(previous_scope != current_scope){
             current_scope.addNeighbor(previous_scope);
         }
         
@@ -156,5 +156,5 @@ public class GraphDistribution extends Distribution {
     public DistributionManager getGraph(){
         return graph;
     }
-    
+
 }

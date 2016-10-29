@@ -1,6 +1,7 @@
 
 package core;
 
+//import graphs.DistributionNode;
 import statistics_analysis.DistributionGenerator;
 import statistics_distributions.Distribution;
 import statistics_distributions.GraphDistribution;
@@ -14,6 +15,14 @@ public class Iris {
     
     public Iris(){
         dist_memory = new GraphDistribution();
+        // testing purposes
+        /*dist_memory.getGraph().addDistributionNode(new GraphDistribution());
+        dist_memory.getGraph().addDistributionNode(new GraphDistribution());
+        DistributionNode x = (DistributionNode) dist_memory.getGraph().root.getNodeById(1);
+        ((GraphDistribution)x.getDistribution()).getGraph().addDistributionNode(new GraphDistribution());
+        ((GraphDistribution)x.getDistribution()).getGraph().addDistributionNode(new GraphDistribution());
+        ((GraphDistribution)x.getDistribution()).getGraph().addDistributionNode(new GraphDistribution());
+        ((GraphDistribution)x.getDistribution()).getGraph().addDistributionNode(new GraphDistribution());*/
     }
     
     // Convert string input to numbers- BASIC: chars to ints.
