@@ -46,7 +46,7 @@ public class FileManager extends Panel {
         add("Center", irises);
         
         Panel options = new Panel();
-        Button save = new Button("S");
+        Button save = new Button("Save");
         save.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +61,14 @@ public class FileManager extends Panel {
             }
         });
         options.add(save);
+        Button sleep = new Button("Sleep");
+        sleep.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                brains.sleep();
+            }
+        });
+        options.add(sleep);
         
         add("North", options);
     }

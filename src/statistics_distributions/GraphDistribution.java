@@ -6,7 +6,6 @@ import graphs.DistributionNode;
 import graphs.MemoryNode;
 import java.util.ArrayList;
 import statistics_analysis.DataSet;
-import statistics_analysis.PValueGenerator;
 
 /**
  *
@@ -54,11 +53,10 @@ public class GraphDistribution extends Distribution {
     
     // Search for first node in graph with a high-enough p-value to not reject hypothesis
     private void seekFirst(DistributionNode node, 
-            ArrayList<Integer> visited) {
-        PValueGenerator nuisance = new PValueGenerator((DataSet)node.getData());
+                           ArrayList<Integer> visited) {
         visited.add(node.getId());
-        if(node.getDistribution() != null){
-            double pv = nuisance.getPValue(node.getDistribution(), node.getPreferredBinSize())
+        if(node.getDistribution() != null){ //if not root
+            double pv = node.getDistribution().f(last_datum)
                     * node.getNumberOfCalls()/total_frequency;
             if(track*pv>0.05){
                 node.addConfirmedDatum(last_datum);
@@ -84,9 +82,7 @@ public class GraphDistribution extends Distribution {
         
         last_datum = x;
         
-        if(current_scope != null) {
-            seekFirst(current_scope, new ArrayList());
-        }
+        seekFirst(current_scope, new ArrayList());
         
         // link it to previous, if necessary
         //   note that checking for existing neighbors 
@@ -115,7 +111,11 @@ public class GraphDistribution extends Distribution {
     @Override
     public double f(double x) {
         DistributionNode target = huntForDistribution(x);
-        if(target == graph.root) return 0; // the existing graph has no facilities
+        
+        // graph has never met this kind of datum before
+        if(target == graph.root) {
+            return 0;
+        }
         
         return track;
     }
@@ -164,6 +164,10 @@ public class GraphDistribution extends Distribution {
 
     public void addDistributionNode(Distribution distant, int add_to) {
         graph.addDistributionNode(distant, add_to);
+    }
+    
+    public DistributionNode getNewest(){
+        return (DistributionNode) graph.getNewest();
     }
     
 }

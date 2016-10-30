@@ -23,6 +23,7 @@ public class DistributionManager extends MemoryManager {
         root.mouse_x = 200;
         root.mouse_y = 100;
         root.setData(new DataSet());
+        newest = root;
     }
     
     // DEPRECATED

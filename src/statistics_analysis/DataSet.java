@@ -27,13 +27,21 @@ public class DataSet implements Serializable {
         mean = 0;
         variance = 0;
     }
+    
+    public DataSet(double[] lst) {
+        data = new ArrayList<>();
+        mode = new ArrayList<>();
+        modeFrequency = 0;
+        dataNumber = 0;
+        totalFrequency = 0;
 
-    public DataSet(ArrayList<Datum> data) {
-        data.stream().forEach((thing) -> {
-            for (int i = 0; i < thing.frequency; i++) {
-                addDatum(thing.getContent());
-            }
-        });
+        // Useless values:
+        mean = 0;
+        variance = 0;
+        
+        for(int i=0; i<lst.length; i++){
+            addDatum(lst[i]);
+        }
     }
 
     // Clone:
@@ -73,7 +81,7 @@ public class DataSet implements Serializable {
         totalFrequency ++;
     }
 
-    public void addDatum(double value) {
+    public final void addDatum(double value) {
         int where_to_insert = 0;
         for (Datum thing : data) {
             if (thing.getContent() == value) {

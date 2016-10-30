@@ -13,6 +13,7 @@ import java.util.Iterator;
 public class MemoryManager implements Serializable {
     public MemoryNode root;
     protected int number_of_nodes; // Root is node 0
+    protected MemoryNode newest;
     
     // Constructor:
     public MemoryManager(){
@@ -20,6 +21,7 @@ public class MemoryManager implements Serializable {
         root = new MemoryNode(new ArrayList<>(), 0);
         root.mouse_x = 200;
         root.mouse_y = 100;
+        newest = root;
     }
     
     // Method to build a randomized graph with a given number of nodes
@@ -87,6 +89,7 @@ public class MemoryManager implements Serializable {
         }
         
         MemoryNode toAdd = new MemoryNode(new ArrayList<>(), getNextId());
+        newest = toAdd;
         
         MemoryNode destination = root.seek(destination_id, new ArrayList<>());
         if(destination!=null){
@@ -107,6 +110,7 @@ public class MemoryManager implements Serializable {
             return;
         }
         
+        newest = node;
         MemoryNode destination = root.seek(destination_id, new ArrayList<>());
         
         if(destination==null){
@@ -124,6 +128,9 @@ public class MemoryManager implements Serializable {
             return;
         }
         
+        if(memories.size()>0){
+            newest = memories.get(memories.size()-1);
+        }
         MemoryNode destination = root.seek(destination_id, new ArrayList<>());
         
         if(destination==null){
@@ -376,5 +383,9 @@ public class MemoryManager implements Serializable {
             i++;
         }
         sleep();
+    }
+    
+    public MemoryNode getNewest(){
+        return newest;
     }
 }

@@ -26,6 +26,9 @@ public class PValueGenerator {
     // Calculates pvalue after binnifying the data
     //    Note: bin_size of 0 looks at original, un-binnified dataset
     public double getPValue(Distribution d, double bin_size) {
+        if(d == null){
+            return 1;
+        }
         try {
             double lambda = 0;
             DataSet data2 = data.binnify(bin_size);
@@ -48,6 +51,6 @@ public class PValueGenerator {
             return 1 - m.F(lambda);
         } catch (IllegalArgumentException e) {
             return 0;
-        }
+        } 
     }
 }
