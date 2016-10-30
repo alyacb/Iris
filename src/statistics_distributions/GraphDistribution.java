@@ -52,7 +52,7 @@ public class GraphDistribution extends Distribution {
     }
     
     // Search for first node in graph with a high-enough p-value to not reject hypothesis
-    private void seekFirst(DistributionNode node, 
+    private DistributionNode seekFirst(DistributionNode node, 
                            ArrayList<Integer> visited) {
         visited.add(node.getId());
         if(node.getDistribution() != null){ //if not root
@@ -61,15 +61,18 @@ public class GraphDistribution extends Distribution {
             if(track*pv>0.05){
                 node.addConfirmedDatum(last_datum);
                 track*=pv;
-                current_scope = node;
-                return;
+                return node;
             }
         }
         for(MemoryNode d: node.getNeighbors()){
             if(visited.contains(d.getId())) continue;
-            seekFirst((DistributionNode) d, visited);
+            System.out.println(last_datum + ", Checking node ... " + d.getId());
+            DistributionNode x = seekFirst((DistributionNode) d, visited);
+            if(x!=graph.root){
+                return x;
+            }
         }
-        current_scope = (DistributionNode) graph.root; // nothing was found
+        return (DistributionNode) graph.root; // nothing was found
     }
     
     //Look for closest appropriate distribution in the current scope
@@ -82,7 +85,8 @@ public class GraphDistribution extends Distribution {
         
         last_datum = x;
         
-        seekFirst(current_scope, new ArrayList());
+        current_scope = seekFirst(current_scope, new ArrayList());
+        System.out.println("Scope is now: " + current_scope.getId());
         
         // link it to previous, if necessary
         //   note that checking for existing neighbors 

@@ -35,6 +35,7 @@ public class Iris implements Serializable {
             }
         }
         dist_memory.clearTrack(); // input complete, start from scratch
+        sleep();
     }
     
     public GraphDistribution getMemory(){
