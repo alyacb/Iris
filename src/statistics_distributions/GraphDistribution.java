@@ -162,4 +162,8 @@ public class GraphDistribution extends Distribution {
         graph.addDistributionNode(distant);
     }
 
+    public void addDistributionNode(Distribution distant, int add_to) {
+        graph.addDistributionNode(distant, add_to);
+    }
+    
 }

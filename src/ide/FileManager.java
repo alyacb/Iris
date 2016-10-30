@@ -60,11 +60,7 @@ public class FileManager extends Panel {
                 initialize_directory();
             }
         });
-        Button backup = new Button("B");
-        Button delete = new Button("D");
         options.add(save);
-        options.add(delete);
-        options.add(backup);
         
         add("North", options);
     }
