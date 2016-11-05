@@ -133,4 +133,11 @@ public abstract class Distribution implements Serializable {
     
     // validates the arguments of the distribution
     protected abstract void validate() throws IllegalArgumentException;
+
+    // Method to embed a distribution into a graph
+    public final Distribution toGraphDistribution() {
+        GraphDistribution g = new GraphDistribution();
+        g.addDistributionNode(this);
+        return g;
+    }
 }

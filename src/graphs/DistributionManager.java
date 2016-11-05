@@ -58,4 +58,5 @@ public class DistributionManager extends MemoryManager {
     public void addDistributionNode(Distribution d){
         addDistributionNode(d, 0);
     }
+
 }

@@ -45,12 +45,6 @@ public class GraphDistribution extends Distribution {
 
     // Methods
     
-    // Reset tracker, for when a brand new, unrelated search needs to be made
-    public void clearTrack(){
-        current_scope = (DistributionNode)graph.root;
-        track = -1;
-    }
-    
     // Search for first node in graph with a high-enough p-value to not reject hypothesis
     private DistributionNode seekFirst(DistributionNode node, 
                            ArrayList<Integer> visited) {
@@ -114,6 +108,7 @@ public class GraphDistribution extends Distribution {
 
     @Override
     public double f(double x) {
+        track = -1;
         DistributionNode target = huntForDistribution(x);
         
         // graph has never met this kind of datum before

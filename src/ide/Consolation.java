@@ -32,7 +32,7 @@ public class Consolation extends Panel {
         console.addKeyListener(new EnterKeyListener() {
             @Override
             public void doThis(KeyEvent e) {
-                brains.input(console.getText());
+                brains.placeInput(console.getText());
                 view.refresh();
                 console.setText("");
             }
