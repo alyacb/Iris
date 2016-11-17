@@ -31,10 +31,7 @@ public class DistributionNode extends MemoryNode {
     }
     
     public void setDistribution(Distribution d){
-        if(needs_update){
-            distribution = d;
-            needs_update = false;
-        }
+        distribution = d;
     }
     
     // TBI 
@@ -71,6 +68,7 @@ public class DistributionNode extends MemoryNode {
         DistributionGenerator dg = 
                     new DistributionGenerator((DataSet)getData(), graph);
         setDistribution(dg.generateBestDistribution());
+        needs_update = false;
         if(distribution instanceof GraphDistribution){
             ((GraphDistribution)distribution).goodNight();
         }

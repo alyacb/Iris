@@ -60,7 +60,6 @@ public class GraphDistribution extends Distribution {
         }
         for(MemoryNode d: node.getNeighbors()){
             if(visited.contains(d.getId())) continue;
-            System.out.println(last_datum + ", Checking node ... " + d.getId());
             DistributionNode x = seekFirst((DistributionNode) d, visited);
             if(x!=graph.root){
                 return x;
@@ -80,7 +79,6 @@ public class GraphDistribution extends Distribution {
         last_datum = x;
         
         current_scope = seekFirst(current_scope, new ArrayList());
-        System.out.println("Scope is now: " + current_scope.getId());
         
         // link it to previous, if necessary
         //   note that checking for existing neighbors 

@@ -12,49 +12,46 @@ import statistics_distributions.GraphDistribution;
  */
 public class Scope {
 
-    private DistributionNode locale, bestNode;
-    private DistributionManager boss;
+    private DistributionNode locale, graphSource, bestNode;
     private boolean flag;
     private double max;
+    
 
-    private void initialize(DistributionManager boss, DistributionNode locale) {
-        if (boss == null) {
+    private void initialize(DistributionNode graphSource, DistributionNode locale) {
+        if (graphSource == null) {
             throw new NullPointerException("Root of scope must not be null.");
         }
-        this.boss = boss;
+        if (!(graphSource.getDistribution() instanceof GraphDistribution)) {
+            graphSource.setDistribution(graphSource.getDistribution().toGraphDistribution());
+        }
+        this.graphSource = graphSource;
         this.locale = locale;
         this.flag = false;
     }
 
-    public Scope(DistributionManager boss, DistributionNode locale) {
-        initialize(boss, locale);
+    public Scope(DistributionNode graphSource, DistributionNode locale) {
+        initialize(graphSource, locale);
     }
 
-    public Scope(DistributionManager boss) {
-        initialize(boss, null);
+    public Scope(DistributionNode graphSource) {
+        initialize(graphSource, null);
     }
 
     public Scope(Scope old) {
-        if (old.locale == null) {
-            initialize(old.boss, null);
-            flag = true;
-        } else {
-            if (!(old.locale.getDistribution() instanceof GraphDistribution)) {
-                // Input kept going, there is more depth to this distribution,
-                //    than previously believed
-                old.locale.setDistribution(old.locale.getDistribution().toGraphDistribution());
-            }
-            initialize(((GraphDistribution) old.locale.getDistribution())
-                    .getGraph(), null);
-        }
+        flag = old.locale == null;
+        initialize(old.graphSource, old.locale);
     }
 
     static Scope clone(Scope get) {
-        return new Scope(get.boss, get.locale);
+        return new Scope(get.graphSource, get.locale);
     }
 
     public DistributionManager getGraphScope() {
-        return boss;
+        return ((GraphDistribution)graphSource.getDistribution()).getGraph();
+    }
+    
+    public DistributionNode getGraphSource(){
+        return graphSource;
     }
 
     public DistributionNode getLocale() {
@@ -71,9 +68,13 @@ public class Scope {
         visited.add(node.getId());
         if (node.getDistribution() != null) {
             double fx = node.getDistribution().f(d);
-            if (fx > max) {
+            if (fx >= max) {
                 max = fx;
                 bestNode = node;
+                // definite
+                if(max == 1){
+                    return;
+                }
             }
         }
         for (MemoryNode m : node.getNeighbors()) {
@@ -97,17 +98,23 @@ public class Scope {
                 findImpl((DistributionNode) ((GraphDistribution) dn.getDistribution()).getGraph().root,
                         d,
                         visited);
+                // definite
+                if(max == 1){
+                    break;
+                }
             }
         }
     }
 
     public DistributionNode find(double d) {
         max = 0;
-        bestNode = (DistributionNode) boss.root;
+        DistributionNode root = (DistributionNode) 
+                ((GraphDistribution)graphSource.getDistribution()).getGraph().root;
+        bestNode = (DistributionNode) root;
         if (!isBroad()) {
-            findImpl((DistributionNode) boss.root, d, new ArrayList());
+            findImpl((DistributionNode) root, d, new ArrayList());
         } else {
-            findImplBroad((DistributionNode) boss.root, d, new ArrayList());
+            findImplBroad((DistributionNode) root, d, new ArrayList());
         }
         if (max == 0) {
             return null;
